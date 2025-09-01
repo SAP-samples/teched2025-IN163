@@ -1,41 +1,45 @@
-# SAP-samples/repository-template
+# IN163 - Implementing Exactly Once In Order delivery in SAP Integration Suite
 This default template for SAP Samples repositories includes files for README, LICENSE, and REUSE.toml. All repositories on github.com/SAP-samples will be created based on this template.
 
-# Containing Files
-
-1. The LICENSE file:
-In most cases, the license for SAP sample projects is `Apache 2.0`.
-
-2. The REUSE.toml file: 
-The [Reuse Tool](https://reuse.software/) must be used for your samples project. You can find the REUSE.toml in the project initial. Please replace the parts inside the single angle quotation marks < > by the specific information for your repository.
-
-3. The README.md file (this file):
-Please edit this file as it is the primary description file for your project. You can find some placeholder titles for sections below.
-
-# [Title]
-<!-- Please include descriptive title -->
-
-<!--- Register repository https://api.reuse.software/register, then add REUSE badge:
-[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/REPO-NAME)](https://api.reuse.software/info/github.com/SAP-samples/REPO-NAME)
--->
-
 ## Description
-<!-- Please include SEO-friendly description -->
+
+This repository contains the material for the SAP TechEd 2025 session called IN163 - Implementing Exactly Once In Order delivery in SAP Integration Suite.
+
+## Overview
+
+This session allows you to implement integration scenarios supporting Exactly Once In Order delivery to ensure data consistency when exchanging messages via SAP Integration Suite. In the session we will focus on two options: using exclusive queues in Cloud Integration and via partitioned queues of SAP Integration Suite, advanced event mesh.
 
 ## Requirements
 
-## Download and Installation
+The requirements to follow the exercises in this repository are...
 
-## Known Issues
-<!-- You may simply state "No known issues. -->
+## Access to SAP Integration Suite tenant
 
-## How to obtain support
-[Create an issue](https://github.com/SAP-samples/<repository-name>/issues) in this repository if you find a bug or have questions about the content.
- 
-For additional support, [ask a question in SAP Community](https://answers.sap.com/questions/ask.html).
+For running through the exercises, we provide the following SAP Integration Suite tenants. The instructors will let you know which of the tenants are actually used for the exercises.
+
+- Option 1: [**Workshop tenant eu-02a**](https://workshop-eu-02a.integrationsuite-cpi033.cfapps.eu10-005.hana.ondemand.com/shell/home).
+- Option 2: [**Workshop tenant eu-02b**](https://workshop-eu-02b.integrationsuite-cpi035.cfapps.eu20-001.hana.ondemand.com/shell/home).
+- Use the user **userXX** with **XX** your ID and password provided by the instructors.
+
+## Exercises
+
+As a prerequisite for the exercises, you first need to run through the following preparation steps.
+- [Exercise 0 - Prepare the Exercises](exercises/ex0/)
+
+The exercises are divided into the following two parts:
+- [Exercise 1 - EOIO via Exclusive Queues on Cloud Integration](exercises/ex1/)
+- [Exercise 2 - EOIO via Partitioned Queues using AEM](exercises/ex2/)
+
 
 ## Contributing
-If you wish to contribute code, offer fixes or improvements, please send a pull request. Due to legal reasons, contributors will be asked to accept a DCO when they create the first pull request to this project. This happens in an automated fashion during the submission process. SAP uses [the standard DCO text of the Linux Foundation](https://developercertificate.org/).
+Please read the [CONTRIBUTING.md](./CONTRIBUTING.md) to understand the contribution guidelines.
+
+## Code of Conduct
+Please read the [SAP Open Source Code of Conduct](https://github.com/SAP-samples/.github/blob/main/CODE_OF_CONDUCT.md).
+
+## How to obtain support
+
+Support for the content in this repository is available during the actual time of the online session for which this content has been designed. Otherwise, you may request support via the [Issues](../../issues) tab.
 
 ## License
-Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved. This project is licensed under the Apache Software License, version 2.0 except as noted otherwise in the [LICENSE](LICENSE) file.
+Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved. This project is licensed under the Apache Software License, version 2.0 except as noted otherwise in the [LICENSE](LICENSES/Apache-2.0.txt) file.
