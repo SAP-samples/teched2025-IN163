@@ -1,14 +1,12 @@
-# Prepare the Migration Exercises
+# Prepare the EOIO Exercises
 
-After having finished the assessment of the current SAP Process Orchestration landscape, the next step is the actual migration.
-
-Before running through the migration tool exercises, you first need to run trough the following preparation steps:
+Before running through the exercises, you first need to run trough the following preparation steps:
 - [Create an integration package](#create-an-integration-package)
 - [Setup Bruno API client](#setup-bruno-api-client)
 
 ## Create an Integration package
 
-As a prerequisite, you first need to create an integration package where the automatically generated integration flows are created. If you have already run through other exercises before, you may have already created an own package. In this case, you can simply reuse the other package and skip the steps below.
+As a prerequisite, you first need to create an integration package where your integration flows are created. If you have already run through other exercises before, you may have already created an own package with same name. In this case, you can simply reuse the other package and skip the steps below.
 
 1. Open the SAP Integration Suite landing page, and navigate to <b>Design > Integrations and APIs</b>, and select  <b>Create</b>.
 
@@ -26,7 +24,7 @@ To run the integration scenarios, we use the open source API client Bruno for wh
 
 Import the provided collection if not already done.
 
-1. In the SAP Integration Suite landing page, navigate to **Design > Integrations and APIs**. Select the integration package **Migration Hands-on Workshop - Solution** and switch to tab **Documents**. From there you can download the Bruno collection **Migration Hands-on Workshop**. The downloaded file is zipped, so you first need to unzip the file in your download folder before proceeding.
+1. In the SAP Integration Suite landing page, navigate to **Design > Integrations and APIs**. Select the integration package **EOIO Hands-on Workshop - Template** and switch to tab **Documents**. From there you can download the Bruno collection **EOIO Hands-on Workshop**. The downloaded file is zipped, so you first need to unzip the file in your download folder before proceeding.
 
 <br>![](/exercises/ex0/images/00_02_Bruno_00.png)
 
@@ -38,7 +36,7 @@ Import the provided collection if not already done.
 
 <br>![](/exercises/ex0/images/00_02_Bruno_02.png)
 
-4. Navigate to the location where you saved and unzippd the beforehand downloaded collection and select the file **Migration Hands-on Workshop.json**.
+4. Navigate to the location where you saved and unzippd the beforehand downloaded collection and select the file **EOIO Hands-on Workshop.json**.
 
 <br>![](/exercises/ex0/images/00_02_Bruno_03.png)
 
@@ -58,12 +56,12 @@ As part of the collection, variables and environment parameters have been mainta
 
 <br>![](/exercises/ex0/images/00_02_Bruno_06.png)
 
-3. If you expand the **Migration Hands-on Workshop** collection, you should see four requests. In order to be able to select an environment, you need to select any request. As you can see, the variables are used to define the URL and the authentication. Select either the environment **eu-02a** or **eu-02b** depending on the tenant used in the exercises. The instructors will let you know which environment is used.
+3. If you expand the **EOIO Hands-on Workshop** collection, you should see two folders. In order to be able to select an environment, you need to select any request. As you can see, the variables are used to define the URL and the authentication. Select either the environment **eu-02a** or **eu-02b** depending on the tenant used in the exercises. The instructors will let you know which environment is used.
 
 <br>![](/exercises/ex0/images/00_02_Bruno_07.png)
 
 ## Summary
 
-Now that you have run through the preparation steps, you can start with the actual migration exercise.
+Now that you have run through the preparation steps, you can start with the actual exercise.
 
-Go back to - [Main page](../../README.md)
+Continue to - [Exercise 1 - Exactly Once In Order Scenario using Exclusive Queues](../ex1/README.md)
