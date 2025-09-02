@@ -1,4 +1,4 @@
-# Exercise 1 - Exactly Once In Order scenario using exclusive queues
+# Exercise 1 - Exactly Once In Order Scenario using Exclusive Queues
 
 In this exercise, we will model and run an integration flow supporting Exactly Once In Order delivery by using an **exclusive JMS queue**. This ensures the following:
 - By persisting the messages in a JMS queue, Cloud Integration can carry out the retry of the message delivery in case of an error.
@@ -6,49 +6,45 @@ In this exercise, we will model and run an integration flow supporting Exactly O
 
 You can anticipate the following situation: A message fails and is retried automatically until the message is successfully delivered. As long as the failed message is in retry, all successor messages are kept on hold to ensure that they don't overtake the predecessor message.
 
-In the exercise, you won't start from scratch instead you will use a template so that you can focus on the Exactly Once In Order specific settings only. In our example integration flow, a message is sent to an SAP RM sender adapter and directly stored in a JMS queue to guarantee message retry in case of a message processing error. The SAP RM protocol extends the plain SOAP protocol to support Exactly Once and Exactly Once In Order delivery by providing SAP proprietary SOAP headers or query parameters. To support Exactly Once, a **message id** needs to be passed to the integration flow. For Exactly Once In Order delivery, you need to transfer a **queue id** to the integration flow. If a queue ID is present, the quality of service is implicitly determined as Exactly Once In Order.
+In the exercise, you won't start from scratch instead you will use a template so that you can focus on the Exactly Once In Order specific settings only. In our example integration flow, a message is sent to an **SAP RM sender adapter** and directly stored in a JMS queue to guarantee message retry in case of a message processing error. The SAP RM protocol extends the plain SOAP protocol to support Exactly Once and Exactly Once In Order delivery by providing SAP proprietary SOAP headers or query parameters. To support Exactly Once, a **message id** needs to be passed to the integration flow. For Exactly Once In Order delivery, you need to transfer a **queue id** to the integration flow. If a queue ID is present, the quality of service is implicitly determined as Exactly Once In Order.
 
-The second integration process reads the message from the very same JMS queue and runs the actual integration logic, in our case a message mapping. Once the message mapping has been successfully carried out, the message is reliably exchanged with a receiver using the XI 3.0 protocol. The XI adapter in Cloud Integration doesn’t natively support Exactly Once In Order delivery. Instead, you need to select the **Handled by Integration Flow** delivery assurance to implement the same. If you use the Handled by Integration Flow delivery assurance setting, the XI receiver adapter doesn’t persist the outgoing message which is not needed here because the message is persisted and retried from the exclusive JMS queue anyway. Furthermore, the XI receiver adapter expects the headers **SapQualityOfService** and **SapQueueId** to be set within the integration flow. Those headers are actually configured by using the corresponding headers passed from the SAP RM sender adapter.
+The second integration process reads the message from the very same JMS queue and runs the actual integration logic, in our case a message mapping. Once the message mapping has been successfully carried out, the message is reliably exchanged with a receiver using the XI 3.0 protocol. The **XI adapter** in Cloud Integration doesn’t natively support Exactly Once In Order delivery. Instead, you need to select the **Handled by Integration Flow** delivery assurance to implement the same. If you use the Handled by Integration Flow delivery assurance setting, the XI receiver adapter doesn’t persist the outgoing message which is not needed here because the message is persisted and retried from the exclusive JMS queue anyway. Furthermore, the XI receiver adapter expects the headers **SapQualityOfService** and **SapQueueId** to be set within the integration flow. Those headers are actually configured by using the corresponding headers passed from the SAP RM sender adapter.
 
 For an improved monitoring of the echanged messages, we have configured the corresponding SAP headers and custom header properties. This is already part of the provided template.
 
 In order to simulate the error situation, we will use a re-usable message mapping in the integration flow as global resource which we intentionally won't deploy in the first place. To resolve the error, we will simply deploy the message mapping artifact. The failed message and all successor messages which were on hold will be eventually successfully delivered after an automatic retry.
 
-## Copy provided integration flow
+## Exercise 1.1 - Copy Provided Integration Flow Template
 
-In the following, you will copy the integration flow **Pattern Quality Of Service - EOIO Template** provided to you.
+In the following, you will copy the provided integration flow and message mapping templates to your package. As a prerequisite, you should have created an own package. If you haven't created an own integration package yet, navigate to [Create an Integration package](/exercises/ex0/#create-an-integration-package), create a new package and then return. Otherwise, proceed with the next steps.
 
-1. Open your previously created package, and switch to the <b>Artifacts</b> tab, then switch to <b>Edit</b> Mode. If you haven't created an own integration package yet, navigate to [Create an Integration package](/exercises/ex0/#create-an-integration-package), create a new package and then return. Otherwise, proceed with the next steps.
+1. Open the provided tenant, and navigate to **Design > Integrations and APIs**. From there, open the integration package **EOIO Hands-on Workshop - Template** by selecting the same.
 
-<br>![](/exercises/ex2/images/02_01_Migrate_01.png)
+<br>![image](/exercises/ex1/images/01_01_CopyTemplates_01.png)
 
-1. Navigate back to the list of packages by clicking the **Integrations and APIs** bread crumb.
+2. For message mappings, a copy is not supported. So, we need to download and then import the message mapping template. In the integration package **EOIO Hands-on Workshop - Template**, switch to the **Artifacts** tab. For the message mapping **MM EOIO Exclusive Queue - Template** select the entry **Download** from the **Actions** menue.
 
-<br>![image](/exercises/ex2/images/02-00-NavigateBack.png)
-
-2. Open the package **Exactly Once & Exactly Once In Order Use Cases** by selecting the same.
-
-<br>![image](/exercises/ex2/images/02-01-EnterEOPackage.png)
+<br>![image](/exercises/ex1/images/01_01_CopyTemplates_01.png)
    
 3. In the package **Exactly Once & Exactly Once In Order Use Cases**, switch to tab **Artifacts** and select **Copy** from the **Actions** menu of the integration flow **Pattern Quality Of Service - EOIO Template**.
 
-<br>![](/exercises/ex4/images/04-01-Copy.png)
+<br>![image](/exercises/ex1/images/01_01_CopyTemplates_01.png)
    
 4. In the upcoming dialog, click on **Select** to select a target integration package.
 
-<br>![](/exercises/ex4/images/04-02-Select.png)
+<br>![image](/exercises/ex1/images/01_01_CopyTemplates_01.png)
    
 5. From the list of packages, select your beforehand created package, i.e., package **User XX** where **XX** is the number assigned to you.
 
-<br>![](/exercises/ex4/images/04-03-SelectPackageXX.png)
+<br>![image](/exercises/ex1/images/01_01_CopyTemplates_01.png)
 
 6. In the **Copy "Pattern Quality Of Service - EOIO Template"** dialog, maintain the name of the target integration flow by replacing **Template_copy** with your user number **XX**. Then select **Copy**.
 
-<br>![image](/exercises/ex4/images/04-04-Copy.png)
+<br>![image](/exercises/ex1/images/01_01_CopyTemplates_01.png)
 
 7. In the upcoming **Success** dialog, select **Navigate** to navigate to your package.
 
-<br>![](/exercises/ex4/images/04-05-Navigate.png)
+<br>![image](/exercises/ex1/images/01_01_CopyTemplates_01.png)
 
 
 ## Model your integration flow
