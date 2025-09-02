@@ -7,11 +7,13 @@ This repository contains the material for the SAP TechEd 2025 session called IN1
 
 ## Overview
 
-This session allows you to implement integration scenarios supporting Exactly Once In Order delivery to ensure data consistency when exchanging messages via SAP Integration Suite. In the session we will focus on two options: using exclusive queues in Cloud Integration and via partitioned queues of SAP Integration Suite, advanced event mesh.
+This session allows you to implement integration scenarios supporting Exactly Once In Order delivery to ensure data consistency when exchanging messages via SAP Integration Suite, that is messages are delivered without duplication and in their original sequence. In the session we will focus on two options:
+- Using exclusive queues in Cloud Integration
+- Via partitioned queues of SAP Integration Suite, advanced event mesh.
 
-## Requirements
+For an introduction into Exactly Once In Order support in Cloud Integration, check out this [blog post](https://community.sap.com/t5/integration-blog-posts/ensuring-exactly-once-in-order-quality-of-service-in-cloud-integration/ba-p/14180026).
 
-The requirements to follow the exercises in this repository are...
+For more details about the actual implementaiton options of Exactly Once In Order in Cloud Integration, refer to the [design guidelines](https://help.sap.com/docs/integration-suite/sap-integration-suite/quality-of-service-exactly-once-in-order).
 
 ## Access to SAP Integration Suite tenant
 
