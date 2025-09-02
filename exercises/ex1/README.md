@@ -14,7 +14,7 @@ For an improved monitoring of the echanged messages, we have configured the corr
 
 In order to simulate the error situation, we will use a re-usable message mapping in the integration flow as global resource which we intentionally won't deploy in the first place. To resolve the error, we will simply deploy the message mapping artifact. The failed message and all successor messages which were on hold will be eventually successfully delivered after an automatic retry.
 
-## Exercise 1.1 - Copy Provided Integration Flow Template
+## Exercise 1.1 - Copy Provided Templates
 
 In the following, you will copy the provided integration flow and message mapping templates to your package. As a prerequisite, you should have created an own package. If you haven't created an own integration package yet, navigate to [Create an Integration package](/exercises/ex0/#create-an-integration-package), create a new package and then return. Otherwise, proceed with the next steps.
 
@@ -22,258 +22,224 @@ In the following, you will copy the provided integration flow and message mappin
 
 <br>![image](/exercises/ex1/images/01_01_CopyTemplates_01.png)
 
-2. For message mappings, a copy is not supported. So, we need to download and then import the message mapping template. In the integration package **EOIO Hands-on Workshop - Template**, switch to the **Artifacts** tab. For the message mapping **MM EOIO Exclusive Queue - Template** select the entry **Download** from the **Actions** menue.
+2. For message mappings, a copy is not supported. So, we need to download and then import the message mapping template. In the integration package **EOIO Hands-on Workshop - Template**, switch to the **Artifacts** tab. Select the entry **Download** from the **Actions** menu of the message mapping **MM EOIO - Template** to download the message mapping artifact to your download folder.
 
-<br>![image](/exercises/ex1/images/01_01_CopyTemplates_01.png)
+<br>![image](/exercises/ex1/images/01_01_CopyTemplates_02.png)
    
-3. In the package **Exactly Once & Exactly Once In Order Use Cases**, switch to tab **Artifacts** and select **Copy** from the **Actions** menu of the integration flow **Pattern Quality Of Service - EOIO Template**.
+3. Next, we will copy the provided integration flow template. Select **Copy** from the **Actions** menu of the integration flow **EOIO Exclusive Queue - Template**.
 
-<br>![image](/exercises/ex1/images/01_01_CopyTemplates_01.png)
+<br>![image](/exercises/ex1/images/01_01_CopyTemplates_03.png)
    
 4. In the upcoming dialog, click on **Select** to select a target integration package.
 
-<br>![image](/exercises/ex1/images/01_01_CopyTemplates_01.png)
+<br>![image](/exercises/ex1/images/01_01_CopyTemplates_04.png)
    
 5. From the list of packages, select your beforehand created package, i.e., package **User XX** where **XX** is the number assigned to you.
 
-<br>![image](/exercises/ex1/images/01_01_CopyTemplates_01.png)
+<br>![image](/exercises/ex1/images/01_01_CopyTemplates_05.png)
 
-6. In the **Copy "Pattern Quality Of Service - EOIO Template"** dialog, maintain the name of the target integration flow by replacing **Template_copy** with your user number **XX**. Then select **Copy**.
+6. In the **Copy "EOIO Exclusive Queue - Template"** dialog, maintain the name of the target integration flow by replacing **Template_copy** with your user number **XX**. Then select **Copy**.
 
-<br>![image](/exercises/ex1/images/01_01_CopyTemplates_01.png)
+<br>![image](/exercises/ex1/images/01_01_CopyTemplates_06.png)
 
 7. In the upcoming **Success** dialog, select **Navigate** to navigate to your package.
 
-<br>![image](/exercises/ex1/images/01_01_CopyTemplates_01.png)
+<br>![image](/exercises/ex1/images/01_01_CopyTemplates_07.png)
 
+8. You should see the copied integration flow in the list of artifacts within your package **User XX**. Next, we need to upload the message mapping artifact. Switch to **Edit** mode.
 
-## Model your integration flow
+<br>![image](/exercises/ex1/images/01_01_CopyTemplates_08.png)
 
-In the following, you will enhance the copied integration flow model to ensure Exactly Once In Order delivery.
+9. Select entry **Message Mapping** from the **Add** menu.
+
+<br>![image](/exercises/ex1/images/01_01_CopyTemplates_09.png)
+
+10. In the upcoming **Add Message Mapping** dialog, select the **Upload** radio button option and then **Browse**.
+
+<br>![image](/exercises/ex1/images/01_01_CopyTemplates_10.png)
+
+11. Navigate to your download folder and select the beforehand downloaded message mapping artifact. i.e., file **MM EOIO - Template.zip**. Select **Open**.
+
+<br>![image](/exercises/ex1/images/01_01_CopyTemplates_11.png)
+
+12. Change the name of the to be created message mapping artifact by replacing **Template** with your user number **XX**. Select **Add**.
+
+<br>![image](/exercises/ex1/images/01_01_CopyTemplates_12.png)
+
+## Exercise 1.2 - Model your Integration Flow
+
+Now that you have copied the provided templates, we should be all set to enhance the copied integration flow model to ensure Exactly Once In Order delivery.
     
-1.  In your package, select the copied integration flow **Pattern Quality Of Service - EOIO XX** with **XX** the ID assigned to you to open the model designer.
+1.  In your package, select the copied integration flow **EOIO Exclusive Queue - XX** with **XX** the ID assigned to you to open the model designer.
 
-<br>![](/exercises/ex4/images/04-06-OpenFlow.png)
+<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_01.png)
     
-2. In the integration flow designer, switch to **Edit** mode.
+2. The integration flow contains two integration processes: the **Integration Process: Provider flow** to store the incoming message in the JMS queue, and the **Integration Process: Consumer flow** to read the message from the very same JMS queue. In the integration flow designer, switch to **Edit** mode.
 
-<br>![](/exercises/ex4/images/04-07-EditMode.png)
+<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_02.png)
 
-3. In the editor, select the **Send** step of the **Integration Process: Provider flow**, then drag ...
+3. First, we will maintain the exclusive JMS queue connection to decouple the two integration processes. In the editor, select the message end event **End** of the upper integration process **Integration Process: Provider flow**, then drag ...
 
-<br>![](/exercises/ex4/images/04-08-SelectConnector.png)
+<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_03.png)
   
 4. ... and drop a connection to the Receiver.
 
-<br>![](/exercises/ex4/images/04-09-DropConnector.png)
+<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_04.png)
 
 5. In the upcoming dialog, select the Adapter Type **JMS**. 
 
-<br>![](/exercises/ex4/images/04-10-SelectJMS.png)
+<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_05.png)
    
-6. In the Properties section of the JMS receiver adapter, switch to the **Processing** tab, and enter the externalized parameter **queueName** into the **Queue Name** field. Note, you create or reuse externalized parameters by placing the parameter name between opening and closing double curly brackets.
+6. Select the JMS connection. In the Properties section of the JMS receiver adapter, switch to the **Processing** tab, and enter the externalized parameter **participant** into the **Queue Name** field. Note, you create or reuse externalized parameters by placing the parameter name between opening and closing double curly brackets.
 
 <br>Queue Name =
 ```yaml
-{{queueName}}
+{{participant}}
 ```
 
-<br>![](/exercises/ex4/images/04-11-EnterExternalized.png)
+<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_06.png)
    
 7. Furthermore, change the **Access Type** to **Exclusive** from the drop down menu.
 
-<br>![](/exercises/ex4/images/04-12-SelectExclusive.png)
+<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_07.png)
 
-8. Scroll down to the **Integration Process: Consumer flow**, and add a JMS sender connection between the Sender and the message start event. On the tab **Connection** of the JMS sender adapter, maintain the same externalized parameter **queueName** that we used before for the JMS receiver adapter into the **Queue Name** field, change the **Access Type** to **Exclusive**, and **unselect** the **Exponential Backoff** flag. Latter makes testing of the flow easier.
+8. Scroll down to the **Integration Process: Consumer flow**, and add a JMS sender connection between the Sender and the message start event. On the tab **Connection** of the JMS sender adapter, maintain the same externalized parameter **participant** that we used before for the JMS receiver adapter into the **Queue Name** field, change the **Access Type** to **Exclusive**, and **unselect** the **Exponential Backoff** flag. Latter makes testing of the flow easier.
 
-<br>![](/exercises/ex4/images/04-14-JMSSender.png)
+<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_08.png)
 
-9. Next, we need to pass the quality of service and a queue id to the XI receiver adapter. From the editor palette, select the **Content Modifier** entry below the **Transformation** menue and drag ...
+9. Next, we need to add the message mapping. Click outside of the integration processes to be able to configure the integration flow components. From the integration flow configuration, switch to tab **References**. Within the references, switch to tab **Global**, and select Message Mapping from the **Add References** menu.
 
-<br>![](/exercises/ex4/images/04-16a-SelectContentModifier.png)
+<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_09.png)
 
-10. ... and drop the flow step on the connecting line between the router and the message end event. In the **Content Modifier**, switch to the **Message Header** tab, and add two new headers as follows:
+10. In the upcoming **References** dialog, select the beforehand added message mapping **MM EOIO - XX** and select **OK**.
 
-Create header with Name **SapQualityOfService**, Source Type **Constant**, and value **ExactlyOnceInOrder**
+<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_10.png)
 
-Create header with Name **SapQueueId**, Source Type **Header**, and value **queueid**
+11. The message mapping should be placed behind the Groovy script of the **Integration Process: Consumer flow**. Select the flow step **Add custom header props** and select the **Plus** icon of the quick menu to add a new flow step.
 
-<br>![](/exercises/ex4/images/04-17-AddHeaders.png)
+<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_11.png)
 
-11. Maintain the connection between the message end event and the Receiver of adapter type **XI**. Switch to the **Delivery Assurance** tab, and maintain the parameters as follows:
+12. Select the entry **Message Mapping** from the **Add Flow Step**. If the **Message Mapping** entry is not listed in the **Recommended Steps** section, search for it and then select the same.
+
+<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_12.png)
+
+13. Select the added message mapping flow step, and switch to tab **Processing**. Then, select **Select**.
+
+<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_13.png)
+
+14. In the upcoming dialog, switch to tab **Global Resources**, and select your message mapping **MM_EOIO__XX**. Select **OK**.
+
+<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_14.png)
+
+15. Next, we need to pass the quality of service and a queue id to the XI receiver adapter. Select the message mapping flow step, and add a new flow step from the quick menu like before.
+
+<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_15.png)
+
+16. In the **Add Flow Step**, select the **Content Modifier** entry below **Transformation**.
+
+<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_16.png)
+
+17. Select the added **Content Modifier** flow step, and switch to the **Message Header** tab. Add two new headers as follows:
+
+Create header with Name **SapQueueId**, Source Type **Header**, and value **SapPlainSoapQueueId**
+
+Create header with Name **SapQualityOfService**, Source Type **Header**, and value **SapPlainSoapQoS**
+
+**Note**: The headers **SapPlainSoapQoS** and **SapPlainSoapQueueId** are passed to the integraiton flow via the SAP RM adapter.
+
+<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_17.png)
+
+18. Next, we need to configure the connection between the message end event and the Receiver of adapter type **XI**. Select the connection and switch to the **Delivery Assurance** tab. Maintain the parameters as follows:
 
 As **XI Message ID Determination**, select **Map** from the drop down list.
 
 Maintain **Source for XI Message ID** as
 ```yaml
-${header.messageid}
+${header.SapMessageIdEx}
 ```
 
-As **Quality Of Service**, select **Handled by Integration Flow** from the drop down menu.
+As **Quality Of Service**, keep **Handled by Integration Flow**.
 
-<br>![](/exercises/ex4/images/04-18-XIAdapter.png)
+<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_18.png)
 
-12. Finally **Save** your changes and then **Cancel** so that you can proceed with configuring the flow.
+19. Finally **Save** your changes and then **Cancel** so that you can proceed with configuring the flow.
 
-<br>![](/exercises/ex4/images/04-19-Save.png)
+<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_19.png)
 
 
-## Configure and deploy your integration flow
+## Exercise 1.3 - Configure and Deploy your Integration Flow
 
 In the following, you will configure and deploy the beforehand modified integration flow.
     
 1.  After having saved and canceled, you should see the **Configure** button on the upper right. Select **Configure**.
 
-<br>![](/exercises/ex4/images/04-20-Configure.png)
+<br>![image](/exercises/ex1/images/01_03_Deploy_01.png)
     
-2. In the configuration dialog, maintain the value of the **participantNumber** parameter. Replace **XX** with the number assigned to you. The parameter value is actually appended to the integration flow end point to ensure a unique end point deployed on the tenant.
+2. In the configuration dialog, on tab **Sender**, maintain the value of the **participant** parameter. Replace **XX** of the preconfigured value **UserXX** with the number assigned to you. The value of the parameter is actually appended to the integration flow end point to ensure a unique end point deployed on the tenant. Furthermore, the value equals the JMS queue name. Then **Save** and **Deploy**.
 
-<br>![](/exercises/ex4/images/04-21-ConfigureXX.png)
+<br>![image](/exercises/ex1/images/01_03_Deploy_02.png)
 
-3. Select the **Sender1** from the Sender drop down, and maintain the value of the **Queue Name** parameter. Replace **XX** of the preconfigured queue name **eoie_XX** with the number assigned to you. Then **Save** and **Deploy**.
+3. Once deployed, you should see a toast message on the bottom of the screen. Furthermore, the **Runtime Status** on top should show as **Started**.
 
-<br>![](/exercises/ex4/images/04-22-SaveAndDeploy.png)
-  
-4. Once deployed, you should see a toast message on the bottom of the screen. Furthermore, the **Runtime Status** on top should show as **Started**.
+<br>![image](/exercises/ex1/images/01_03_Deploy_03.png)
 
-<br>![](/exercises/ex4/images/04-23-Started.png)
+4. You can also check the deployment status in the monitoring. Navigate to **Monitor > Integrations and APIs** from the menu, and select the tile **Manage Integration Content**.
 
-5. Let's fetch the end point of the deployed integration flow. Navigate to **Monitor > Integrations and APIs** from the menu, and select the tile **Manage Integration Content**.
+<br>![image](/exercises/ex1/images/01_03_Deploy_04.png)
 
-<br>![](/exercises/ex4/images/04-23b-ManageIntegrationContent.png)
+5. In the **Manage Integration Content** page, filter for your ID **XX**. You should see your deployed integration flow in status **Started**.
 
-6. In the **Manage Integration Content** page, filter for your ID **XX**. You should see your deployed integration flow in status **Started**. Select the **Copy entry point URL to clipboard** button next to the integration flow's end point as we will use it in the next step.
-
-<br>![](/exercises/ex4/images/04-23c-CopyEndPoint.png)
+<br>![image](/exercises/ex1/images/01_03_Deploy_05.png)
 
 Now you are all set to test your scenario!
 
-## Testing
+## Exercise 1.4 - Test and Monitor
 
-In this chapter, you will test the integration flow. In the following, Bruno is used. However you may use any other http client tool.
+To test your configuration scenario, we use the Bruno API client application for which we have provided a collection with pre-configured sample requests. As a prerequisite to test your integration scenario using the Bruno API client, you should have gone through [Setup Bruno API client](../ex0#setup-bruno-api-client/). If not, do the setup, then come back and proceed with the steps below.
 
-**Note**: You have two options to execute and test your integration scenario:
-- The quickest option is to use the Bruno API client application for which we have provided a collection with pre-configured sample request. As a prerequisite to test your integration scenario using the Bruno API client, you should have gone through [Setup Bruno API client](../prep/). If not, do the setup, then come back and proceed with [option 1](#option-1-using-bruno-api-client).
-- If you like to use your own tool, we have described in detail how to setup a sample request incl. body and authentication. This is described in [option 2](#option-2-using-your-own-api-client).
+1. Open the Bruno application on your laptop, expand the **EOIO Hands-on Workshop** collection and the **EOIO via Exclusive Queue** folder. Select the **Post Order in Sequence** POST request. Ensure that the right environment is selected which defines the host name of the tenant, the client id and the secret. Depending on which tenant you use in the exercises, select either **eu-02a** or **eu-02b**. In the provided URL, the **participant** variable should hold your user number <b>XX</b> assigned to you assuming that you have properly configured the parameter in the Bruno API client setup. The message GUID passed to the integration flow is automatically generated. Trigger a message by selecting the **Send Request** button on the upper right. The request should return HTTP code **202 Accepted**.
 
-### Option 1: Using Bruno API client
+<br>![](/exercises/ex1/images/01_04_Test_01.png)
 
-1. Open the Bruno application on your laptop, expand the **Guidelines Exercises** collection and select the POST request **EOIO request**. Paste the copied end point from the clipboard into the URL field or simply replace the **XX** in the URL with the id provided to you. First, we like to create a message which should intentionally result into an error to block the queue. Switch to the **Headers** tab, and change the value of the header **forceError** to **true**. Ensure that the **eu03** environment has been selected. Then trigger a message by selecting the **Send Request** button on the upper right. The request should return HTTP code 200 and a response confirming that the message has been passed to the exclusive queue.
+2. Now, let's send another message. For this, increase the **PurchaseOrderNumber** in the **Body** of the request. Then trigger a message by selecting the **Send Request** button on the upper right. The request should return HTTP code **202 Accepted**. If you like, you can send a couple of more messages.
 
-<br>![](/exercises/ex4/images/04-25-BrunoError.png)
+<br>![](/exercises/ex1/images/01_04_Test_02.png)
 
-2. Now, let's send another message which should be at the end successfully processed. Change the value of the header **forceError** back to **false**. Then trigger a message by selecting the **Send Request** button on the upper right. The request should return HTTP code 200 and a response confirming that the message has been passed to the exclusive queue.
+3. Navigate back to the monitoring page of Cloud Integration, and select the tile **Monitor Message Processing** from your deployed integration flow **EOIO Exclusive Queue - XX**.
 
-<br>![](/exercises/ex4/images/04-26-BrunoSuccess.png)
+<br>![](/exercises/ex1/images/01_04_Test_03.png)
 
+4. In the **Monitor Message Processing**, you should see three new logs belonging to your participant ID (assuming that you have triggered two test messages, otherwise you may see more logs). Two logs are in status **Completed** with Sender **TestClient_UserXX** and Receiver **JMSXQ_UserXX**. Those are the messages which went through the provider flow and which were put into the exclusive queue. In the **Custom Headers** section of the log, you should see the value of the **QueueID** and the value of the **OrderID** passed from the test client. Furthermore, the Quality of Order **QoS** is automatically set to **ExactlyOnceInOrder**.
 
-### Option 2: Using your own API client
+<br>![](/exercises/ex1/images/01_04_Test_04.png)
 
-1. Open your own API client and create a new **POST** request.
+5. Select the second log in status **Completed**. As you can see from the **OrderID** value, this log belongs to the second message that you sent.
 
-2. Paste the copied end point from the clipboard into the URL field. 
+<br>![](/exercises/ex1/images/01_04_Test_05.png)
 
-3. Enter the following payload into the body section of the sample message.
+6. Select the third log which is in status **Retry**. This is the message which was read from the exclusive queue via the consumer flow and were we intentionally forced an error. Here, the Sender should be **JMSXQ_UserXX** and the Receiver **MockedXIReceiver**. As you can see from the **Error Details**, the message went into an error because the referenced message mapping artifact is not available. Note, the second message is in sort of hold status as long as the predecessor message hasn't been either successfully processed or canceled. For this reason, we only see one log entry for the consumer flow.
 
-```xml
-<?xml version="1.0"?>
-<ns0:PurchaseOrder xmlns:ns0="http://demo.sap.com/eip/qos" PurchaseOrderNumber="XX-101" OrderDate="2021-10-05">
-	<DeliveryNotes>This is a test message for EO</DeliveryNotes>
-	<Items>
-		<Item ItemNumber="10">
-			<ProductId>HT-1000</ProductId>
-			<ProductName>Notebook Basic 15</ProductName>
-			<Category>Notebooks</Category>
-			<Quantity>1</Quantity>
-			<CurrencyCode>EUR</CurrencyCode>
-			<Price>956.00</Price>
-		</Item>
-		<Item ItemNumber="20">
-			<ProductId>HT-1001</ProductId>
-			<ProductName>Notebook Basic 17</ProductName>
-			<Category>Notebooks</Category>
-			<Quantity>1</Quantity>
-			<CurrencyCode>EUR</CurrencyCode>
-			<Price>1249.00</Price>
-		</Item>
-		<Item ItemNumber="30">
-			<ProductId>HT-1030</ProductId>
-			<ProductName>Ergo Screen</ProductName>
-			<Category>Flat screens</Category>
-			<Quantity>2</Quantity>
-			<CurrencyCode>EUR</CurrencyCode>
-			<Price>460.00</Price>
-		</Item>
-	</Items>
-</ns0:PurchaseOrder>
-```
+<br>![](/exercises/ex1/images/01_04_Test_06.png)
 
-4. To authenticate to the Cloud Integration runtime, select **Basic Authentication** and maintain the credentials as follows.
+7. Let's fix the error by deploying the referenced message mapping artifact. Navigate back to your integration package **User XX** with **XX** the number assigned to you, and select the **Deploy** entry from the **Actions** menu of your message mapping **MM EOIO- XX**.
 
-<br>USERNAME =
-```yaml
-sb-3009327f-3dc1-4e3e-9853-5bd7c23e221d!b44358|it-rt-cpisuite-europe-03!b18631
-```
-<br>PASSWORD = 
-```yaml 
-e507568e-892c-443f-a6ba-4d53f76fecac$wS5Kq2nV25PlNT-U8bh8Yd-HGoBZpO-XW7Za9X3URE0=
-```
+<br>![](/exercises/ex1/images/01_04_Test_07.png)
 
-5. Add the following headers:
-- **forceError** with value **true**
-- **queueid** with any value
-- **messageid** with a GUID as hexadecimal digits.
+8. Once deployed, you should see a toast message on the bottom of the screen.
 
-Note, in Bruno we need to put the following script into the Pre Request to generate a v4 GUID. Then  we can use the variable **{{uuid}}** in the header.
+<br>![](/exercises/ex1/images/01_04_Test_08.png)
 
-```yaml
-bru.setVar('uuid', require("uuid").v4());
-```
+9. Navigate back to the **Monitor Message Processing** and **Refresh**. The log of your first order should have changed from Status **Retry** to **Completed**
 
-In Postman, you can simply use **{{$guid}}**.
+<br>![](/exercises/ex1/images/01_04_Test_09.png)
 
-6. Trigger a message. Upon success, you should get a response confirming that the message has been passed to the exclusive queue.
-7. Change the **forceError** header to **false**, then resend the message. You should get a response confirming that the message has been passed to the exclusive queue.
+10. Furthermore, you should see a new log in status **Completed** belonging to the second order sent.
 
-## Monitor the messages and queue
-
-In the following, we monitor the processed messages to confirm that In Order processing is kept.
-
-1. Navigate back to the monitoring page of Cloud Integration, and select the tile **Monitor Message Processing**.
-
-<br>![image](/exercises/ex4/images/04-27-MonitorTile.png)
-
-2. In the **Monitor Message Processing**, you should see two logs belonging to your participant ID in status **Completed** with Sender **XX** and Receiver **JMSExclusiveQueue**. Those are the messages which went through the provider flow and which were put into the exclusive queue.
-
-<br>![image](/exercises/ex4/images/04-28-MPLProvider.png)
-
-3. One more message log is in status **Retry**. This is the message which was read from the exclusive queue via the consumer flow and were we intentionally forced an error. Note, the second message is in sort of hold status as long as the predecessor message hasn't been either successfully processed or canceled. For this reason, we only see one log entry for the consumer flow.
-
-<br>![image](/exercises/ex4/images/04-29-MPLConsumer.png)
-
-4. Let's monitor the queues. Navigate back to the monitoring overview page, and select the tile **Message Queues**.
-
-<br>![image](/exercises/ex4/images/04-30-QueueTile.png)
-
-5. In the **Manage Message Queues**, filter for your participant number, and select the exclusive queue **eoio_XX** with **XX** the participant numnber assigned to you. You should see two entries in **Waiting** status. The first actually belongs to the erroneous message which is in retry, the second belongs to the successor message which is on hold. Since we always trigger an error whenever the first message is retried, the only option to resolve the situation is to delete the message from the exclusive queue. Select the first entry and then select **Delete**.
-
-<br>![image](/exercises/ex4/images/04-31-QueueDeleteEntry.png)
-
-6. In the upcoming dialog, you need to confirm the deletion.
-
-<br>![image](/exercises/ex4/images/04-32-ConfirmDelete.png)
-
-7. Once the message was deleted from the queue, keep refreshing. After a while, the second message should be removed from the queue and hopefully succesfully processed.
-
-<br>![image](/exercises/ex4/images/04-33-Refresh.png)
-
-8. Navigate back to the **Monitor Message Processing**. You should see one log in status **Cancelled** and a new log of your integration flow in status **Completed**. 
-
-<br>![image](/exercises/ex4/images/04-34-MPLFinal.png)
+<br>![](/exercises/ex1/images/01_04_Test_10.png)
 
 
 ## Summary
 
-Congratulations. You have successfully modelled and tested an Exactly Once In Order scenario.
+Congratulations. You have successfully modelled and tested an Exactly Once In Order scenario using Exclusive Queues.
 
 Continue to - [Exercise 2 - Exactly Once In Order scenario using partitioned queues](../ex2/README.md)
