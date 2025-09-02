@@ -92,7 +92,6 @@ Now that you have copied the provided templates, we should be all set to enhance
    
 6. Select the JMS connection. In the Properties section of the JMS receiver adapter, switch to the **Processing** tab, and enter the externalized parameter **participant** into the **Queue Name** field. Note, you create or reuse externalized parameters by placing the parameter name between opening and closing double curly brackets.
 
-<br>Queue Name =
 ```yaml
 {{participant}}
 ```
@@ -141,11 +140,27 @@ Now that you have copied the provided templates, we should be all set to enhance
 
 17. Select the added **Content Modifier** flow step, and switch to the **Message Header** tab. Add two new headers as follows:
 
-Create header with Name **SapQueueId**, Source Type **Header**, and value **SapPlainSoapQueueId**
-
-Create header with Name **SapQualityOfService**, Source Type **Header**, and value **SapPlainSoapQoS**
+      |Name                 | Source Type | Source Value        |
+      | ------------------- | ------------| ------------------- | 
+      | SapQueueId          | Header      | SapPlainSoapQueueId |
+      | SapQualityOfService | Header      | SapPlainSoapQoS     |
 
 **Note**: The headers **SapPlainSoapQoS** and **SapPlainSoapQueueId** are passed to the integraiton flow via the SAP RM adapter.
+
+For your convenience, you can copy the header values from here:
+
+```yaml
+SapQueueId
+```
+```yaml
+SapPlainSoapQueueId
+```
+```yaml
+SapQualityOfService
+```
+```yaml
+SapPlainSoapQoS
+```
 
 <br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_17.png)
 
