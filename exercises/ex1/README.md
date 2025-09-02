@@ -22,7 +22,7 @@ In the following, you will copy the provided integration flow and message mappin
 
 <br>![image](/exercises/ex1/images/01_01_CopyTemplates_01.png)
 
-2. For message mappings, a copy is not supported. So, we need to download and then import the message mapping template. In the integration package **EOIO Hands-on Workshop - Template**, switch to the **Artifacts** tab. Select the entry **Download** from the **Actions** menu of the message mapping **MM EOIO - Template** to download the message mapping artifact to your download folder.
+2. For message mappings, the copy functionality is not supported. So, we need to download and then import the message mapping template. In the integration package **EOIO Hands-on Workshop - Template**, switch to the **Artifacts** tab. Select the entry **Download** from the **Actions** menu of the message mapping **MM EOIO - Template** to download the message mapping artifact to your download folder.
 
 <br>![image](/exercises/ex1/images/01_01_CopyTemplates_02.png)
    
@@ -205,7 +205,7 @@ To test your configuration scenario, we use the Bruno API client application for
 
 <br>![](/exercises/ex1/images/01_04_Test_02.png)
 
-3. Navigate back to the monitoring page of Cloud Integration, and select the tile **Monitor Message Processing** from your deployed integration flow **EOIO Exclusive Queue - XX**.
+3. Navigate back to the monitoring page of Cloud Integration, and select the link **Monitor Message Processing** from your deployed integration flow **EOIO Exclusive Queue - XX**.
 
 <br>![](/exercises/ex1/images/01_04_Test_03.png)
 
