@@ -8,11 +8,11 @@ In this exercise, we will model and run an integration flow supporting Exactly O
 situation with **exclusive JMS Queue**: A message fails and is retried automatically until the message is successfully delivered. As long as the failed message is in retry, **all successor messages** are kept on hold to ensure that they don't overtake the predecessor message.
 situation with **partitioned AEM Queue**: A message fails and is retried automatically until the message is successfully delivered. As long as the failed message is in retry, **all successor messages in the same partition** (same Partition Key Hash) are kept on hold to ensure that they don't overtake the predecessor message.
 
-In the exercise, you won't start from scratch, instead you will use a template so that you can focus on the Exactly Once In Order specific settings only. In our example integration flow, a message is sent to an **SAP RM sender adapter** and directly stored in a partitioned queue on AEM to guarantee message retry in case of a message processing error. The SAP RM protocol extends the plain SOAP protocol to support Exactly Once and Exactly Once In Order delivery by providing SAP proprietary SOAP headers or query parameters. To support Exactly Once, a **message id** needs to be passed to the integration flow. For Exactly Once In Order delivery, you need to transfer a **queue id** to the integration flow. If a queue ID is present, the quality of service is implicitly determined as Exactly Once In Order. There difference to exercise one is that AEM is not running inside of the Integration Suite Tenant, so you´ll need to provide connection details. Additionally to the Queue ID on AEM you´ll also need to provide the User Property "JMSXGroupID" to AEM as Key Value for the generation of the Partition Key Hash. Based on this the messages are distributed across the queue partitions.
+In the exercise, you won't start from scratch, instead you will use a template so that you can focus on the Exactly Once In Order specific settings only. In our example integration flow, a message is sent to an **SAP RM sender adapter** and directly stored in a partitioned queue on AEM to guarantee message retry in case of a message processing error. The SAP RM protocol extends the plain SOAP protocol to support Exactly Once and Exactly Once In Order delivery by providing SAP proprietary SOAP headers or query parameters. To support Exactly Once, a **message id** needs to be passed to the integration flow. For Exactly Once In Order delivery, you need to transfer a **queue id** to the integration flow. If a queue ID is present, the quality of service is implicitly determined as Exactly Once In Order. There difference to exercise one is that AEM is not running inside of the Integration Suite Tenant, so you´ll need to provide **connection details**. Additionally to the Queue ID on AEM you´ll also need to provide the User Property **"JMSXGroupID"** to AEM as Key Value for the generation of the Partition Key Hash. Based on this the messages are distributed across the queue partitions.
 
-Since AEM offers a lot of settings for Queues, In contrast to exercise 1 the Queue is not just created by maintaining it in the channel. You actively have to open up the AEM Broker Manager and create the Queue explicitly + predefine how many partitions and consumers you need. For EOIO the most important parameter here is "Maximum Delivered Unacknowledged Messages per Flow" in Advanced Settings. If the value here is not 1, EOIO is not guaranteed. 
+Since AEM offers a lot of settings for Queues, In contrast to exercise 1 the Queue is not just created by maintaining it in the channel. You actively have to open up the **AEM Broker Manager** and create the Queue explicitly + predefine how many partitions and consumers you need. For EOIO the most important parameter here is **"Maximum Delivered Unacknowledged Messages per Flow"** in Advanced Settings. If the value here is not 1, EOIO is not guaranteed. 
 
-The second integration process reads the message from the very same AEM queue and runs the actual integration logic, in our case a message mapping, but only if the QueueID = "12345". The Routing condition is added here to demonstrate, that if the mapping is not deployed, the Messages in the affected Queue Partition are stuck, until the mapping is deployed and the first message is processed. Until this is the case, the messages from other partitions can still be processed, because they contain different QueueIDs.
+The second integration process reads the message from the very same AEM queue and runs the actual integration logic, in our case a message mapping, but only if the QueueID = "12345". The Routing condition is added here to demonstrate, that if the mapping is not deployed, the Messages in the affected Queue Partition are stuck, until the mapping is deployed and the first message is processed. Until this is the case, the messages from other partitions can still be processed, because they contain different Partition Key Hashs (based on the QueueID).
 
 Once the message mapping has been successfully carried out, the message is reliably exchanged with a receiver using the XI 3.0 protocol. The **XI adapter** in Cloud Integration doesn’t natively support Exactly Once In Order delivery. Instead, you need to select the **Handled by Integration Flow** delivery assurance to implement the same. If you use the Handled by Integration Flow delivery assurance setting, the XI receiver adapter doesn’t persist the outgoing message which is not needed here because the message is persisted and retried from the exclusive JMS queue anyway. Furthermore, the XI receiver adapter expects the headers **SapQualityOfService** and **SapQueueId** to be set within the integration flow. Those headers are actually configured by using the corresponding headers passed from the SAP RM sender adapter.
 
@@ -28,31 +28,61 @@ Since we are using the same Message Mapping, this needs to be undeployed before 
 
 The copying process was explained in Exercise 1. Please copy the Iflow "EOIO Partitioned Queue - Template" analogous to the first Iflow into your Package.
 
-## Exercise 1.2 - Model your Integration Flow
+## Exercise 1.3 - Model your Integration Flow
 
 Now that you have copied the provided templates, we should be all set to enhance the copied integration flow model to ensure Exactly Once In Order delivery.
     
-1.  In your package, select the copied integration flow **EOIO Exclusive Queue - XX** with **XX** the ID assigned to you to open the model designer.
+1.  In your package, select the copied integration flow **EOIO Partitioned Queue - XX** with **XX** the ID assigned to you to open the model designer.
 
 <img width="1064" height="469" alt="image" src="https://github.com/user-attachments/assets/158cefc2-4869-4821-a478-a154fa02a6ea" />
     
-2. The integration flow contains two integration processes: the **Integration Process: Provider flow** to store the incoming message in the JMS queue, and the **Integration Process: Consumer flow** to read the message from the very same JMS queue. In the integration flow designer, switch to **Edit** mode.
+2. The integration flow contains two integration processes: the **Integration Process: Provider flow** to store the incoming message in the AEM queue, and the **Integration Process: Consumer flow** to read the message from the very same AEM queue. In the integration flow designer, switch to **Edit** mode.
 
-<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_02.png)
+<img width="2270" height="769" alt="image" src="https://github.com/user-attachments/assets/c7e8ae4d-9446-44e7-b71b-399996abfbab" />
 
-3. First, we will maintain the exclusive JMS queue connection to decouple the two integration processes. In the editor, select the message end event **End** of the upper integration process **Integration Process: Provider flow**, then drag ...
+3. First, we will maintain the AEM connection to decouple the two integration processes. In the editor, select the message end event **End** of the upper integration process **Integration Process: Provider flow**, then drag ...
 
-<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_03.png)
+<img width="1072" height="293" alt="image" src="https://github.com/user-attachments/assets/864c2b25-ca6e-4141-bc20-b744956eebd4" />
   
 4. ... and drop a connection to the Receiver.
 
-<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_04.png)
+<img width="1257" height="434" alt="image" src="https://github.com/user-attachments/assets/07c347a7-ba1e-4081-88ba-567578d5f0f5" />
 
-5. In the upcoming dialog, select the Adapter Type **JMS**. 
+5. In the upcoming dialog, select the Adapter Type **AdvancedEventMesh**. 
 
-<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_05.png)
+<img width="1025" height="366" alt="image" src="https://github.com/user-attachments/assets/a25e7b6c-5c9e-49a3-9633-856fee55aaed" />
    
-6. Select the JMS connection. In the Properties section of the JMS receiver adapter, switch to the **Processing** tab, and enter the externalized parameter **participant** into the **Queue Name** field. Note, you create or reuse externalized parameters by placing the parameter name between opening and closing double curly brackets.
+6. Select the AEM connection. In the Properties section of the JMS receiver adapter, switch to the **Connection** tab, and enter the Connection Details:
+
+      |Name                   | Value                                                         |
+      | ----------------------| --------------------------------------------------------------| 
+      | Host                  | tcps://mr-connection-h91kb3o1b6w.messaging.solace.cloud:55443 | 
+      | Message VPN           | aem_communitycentral                                          |
+      | Username              | solace-cloud-client                                           |
+      | Authentication Type   | Basic                                                         |
+      | Password Secure Alias | RampUp_AEM_User                                               |
+   
+7. Select the **Processing** Tab. Change the Paramters:
+
+       |Name                   | Value                       |
+       | ----------------------| ----------------------------| 
+       | Delivery Mode         | Persistent (Guaranteed)     |
+       | Endpoint Type         | Queue                       |
+       | Desintation Name      | HOW_EOIO_PQ_{{participant}} | 
+
+8. In the **Message Properties** Tab please add these Properties:
+
+        |Name                   | Value                       |
+       | ----------------------| ----------------------------|
+       | Sender ID         | JMSPQ_${header.participant}    |
+
+   In the User Properties please add the JMSXGroupID
+       | Key            | Value                         |    
+       | JMSXGroupID    | ${header.SapPlainSoapQueueId} |
+   
+10.       
+
+   externalized parameter **participant** into the **Queue Name** field. Note, you create or reuse externalized parameters by placing the parameter name between opening and closing double curly brackets.
 
 ```yaml
 {{participant}}
