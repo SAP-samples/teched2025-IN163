@@ -190,11 +190,11 @@ The "Password Secure Alias" is the a Basic User Credential defined in Monitor ->
     
 2. In the configuration dialog, on tab **Sender**, same as for Exercise 1: maintain the value of the **participant** parameter. Replace **XX** of the preconfigured value **UserXX** with the number assigned to you. The value of the parameter is actually appended to the integration flow end point to ensure a unique end point deployed on the tenant. Furthermore, the value is part of the partitioned Queue Name on AEM. Then **Save** and **Deploy**.
 
-<br>![image](/exercises/ex1/images/01_03_Deploy_02.png)
+<img width="1122" height="600" alt="image" src="https://github.com/user-attachments/assets/a04a147c-b63c-493b-8736-6845926f59fb" />
 
 3. Once deployed, you should see a toast message on the bottom of the screen. Furthermore, the **Runtime Status** on top should show as **Started**.
 
-<br>![image](/exercises/ex1/images/01_03_Deploy_03.png)
+<img width="1519" height="876" alt="image" src="https://github.com/user-attachments/assets/0f32a9e9-8f8c-4a03-b952-aae2ab13304b" />
 
 4. You can also check the deployment status in the monitoring. Navigate to **Monitor > Integrations and APIs** from the menu, and select the tile **Manage Integration Content**.
 
@@ -202,7 +202,7 @@ The "Password Secure Alias" is the a Basic User Credential defined in Monitor ->
 
 5. In the **Manage Integration Content** page, filter for your ID **XX**. You should see your deployed integration flow in status **Started**.
 
-<br>![image](/exercises/ex1/images/01_03_Deploy_05.png)
+<img width="1755" height="823" alt="image" src="https://github.com/user-attachments/assets/ad2a27a4-cff6-4d76-a13e-b055fdef15fd" />
 
 Now you are all set to test your scenario!
 
@@ -239,6 +239,9 @@ Our Mapping is only triggered when QueueID != 12345. So let´s send another 2 Me
 <img width="2138" height="514" alt="image" src="https://github.com/user-attachments/assets/1a18236f-fd16-480f-9d38-c3715fd7a4a7" />
 
 You should see now fore each QueueID two Message with Status "Completed". These are the Messages From the Client to AEM. Then there should be 1 Retry Message. This means AEM will try to push the message again in certain periods (defined in the Queue in AEM Broker Management).
+
+<img width="2250" height="967" alt="image" src="https://github.com/user-attachments/assets/a35eb534-e0c7-4062-b467-efd228a15dea" />
+
 
 Let´s check in AIM (https://mr-connection-h91kb3o1b6w.messaging.solace.cloud:943/?_gl=1*qknv9f*_gcl_au*MTQ1MTI1NTAyNC4xNzU2OTAxMDU0LjU1OTA2MDg5Ni4xNzU3MzMyOTk3LjE3NTczMzMwMTc.*_ga*MTc3MjY3NjI1OS4xNzExNjMzNDUy*_ga_XZ3NWMM83E*czE3NTczNDEzMzMkbzI2NiRnMSR0MTc1NzM0MjcwMCRqMzkkbDAkaDA.#/msg-vpns/YWVtX2NvbW11bml0eWNlbnRyYWw=?token=YWJj.eyJhY2Nlc3NfdG9rZW4iOiAibWlzc2lvbi1jb250cm9sLW1hbmFnZXI6NjJlYWZzZTNmdTdrOHEyZjFkdmdvMXM1cjEifQ%3D%3D.eHl6&title=AEM_CommunityCentral&subtitle=aem_communitycentral) 
 
