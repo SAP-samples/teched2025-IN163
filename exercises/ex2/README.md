@@ -52,137 +52,135 @@ Now that you have copied the provided templates, we should be all set to enhance
 
 <img width="1025" height="366" alt="image" src="https://github.com/user-attachments/assets/a25e7b6c-5c9e-49a3-9633-856fee55aaed" />
    
-6. Select the AEM connection. In the Properties section of the JMS receiver adapter, switch to the **Connection** tab, and enter the Connection Details:
+6. Select the AEM connection. In the Properties section of the AEM receiver adapter, switch to the **Connection** tab, and click on "externalize":
 
-      |Name                   | Value                                                         |
-      | ----------------------| --------------------------------------------------------------| 
-      | Host                  | tcps://mr-connection-h91kb3o1b6w.messaging.solace.cloud:55443 | 
-      | Message VPN           | aem_communitycentral                                          |
-      | Username              | solace-cloud-client                                           |
-      | Authentication Type   | Basic                                                         |
-      | Password Secure Alias | RampUp_AEM_User                                               |
+Please Name your Externalized Parameters for all of the Parameters
+
+|Name                   | Value                                                         |
+| ----------------------| --------------------------------------------------------------| 
+| Host                  | {{AEM_Host}} | 
+| MessageVPN           | {{AEM_MessageVPN}}                                          |
+| Username              | {{AEM_Username}}                                         |
+| AuthenticationType   | {{AEM_AuthenticationType}}                                                         |
+| PasswordSecureAlias | {{AEM_PasswordSecureAlias}}                                               |
+
+<img width="1014" height="467" alt="image" src="https://github.com/user-attachments/assets/1c006c6c-27f1-4453-a3b3-02d348a49985" />
    
-7. Select the **Processing** Tab. Change the Paramters:
+7. Select the **Processing** Tab. Change the Parameters:
 
-       | Name                   | Value                        |
-       | ----------------------| ---------------------------- | 
-       | Delivery Mode         | Persistent (Guaranteed)      |
-       | Endpoint Type         | Queue                        |
-       | Desintation Name      | HOW_EOIO_PQ_{{participant}}  | 
+| Name              | Value                       |
+| ----------------- | --------------------------- |
+| Delivery Mode     | Persistent (Guaranteed)     |
+| Endpoint Type     | Queue                       |
+| Destination Name  | HOW_EOIO_PQ_{{participant}} |
 
-8. In the **Message Properties** Tab please add these Properties:
-
-        |Name                   | Value                       |
-       | ----------------------| ----------------------------|
-       | Sender ID         | JMSPQ_${header.participant}    |
-
-   In the User Properties please add the JMSXGroupID
-       | Key            | Value                         |    
-       | JMSXGroupID    | ${header.SapPlainSoapQueueId} |
-   
-10.       
-
-   externalized parameter **participant** into the **Queue Name** field. Note, you create or reuse externalized parameters by placing the parameter name between opening and closing double curly brackets.
+Note that we are here externalizing parts of the parameters so we can only assign one value and use them in other parts as well (e.g. in the Receiver and Sender Channel of the AEM Connection)
 
 ```yaml
 {{participant}}
 ```
 
-<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_06.png)
+8. In the **Message Properties** Tab please add these Properties:
+
+|Name                   | Value                       |
+| ----------------------| ----------------------------|
+| Sender ID         | ${header.SAP_Receiver}    |
+
+   In the User Properties please add the JMSXGroupID
+
+|Key            | Value                         |    
+| --------------| ----------------------------|
+| JMSXGroupID    | ${header.SapPlainSoapQueueId} |
    
-7. Furthermore, change the **Access Type** to **Exclusive** from the drop down menu.
 
-<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_07.png)
+9. Scroll down to the **Integration Process: Consumer flow**, and add a AEM sender connection between the Sender and the message start event. On the tab **Connection** of the JMS sender adapter, maintain the same externalized parameters as in the AEM Receiver Channel in the upper Flow.
 
-8. Scroll down to the **Integration Process: Consumer flow**, and add a JMS sender connection between the Sender and the message start event. On the tab **Connection** of the JMS sender adapter, maintain the same externalized parameter **participant** that we used before for the JMS receiver adapter into the **Queue Name** field, change the **Access Type** to **Exclusive**, and **unselect** the **Exponential Backoff** flag. Latter makes testing of the flow easier.
+|Name                   | Value                                                         |
+| ----------------------| --------------------------------------------------------------| 
+| Host                  | {{AEM_Host}} | 
+| MessageVPN           | {{AEM_MessageVPN}}                                          |
+| Username              | {{AEM_Username}}                                         |
+| AuthenticationType   | {{AEM_AuthenticationType}}                                                         |
+| PasswordSecureAlias | {{AEM_PasswordSecureAlias}}                                               |
+  
+10. In the **Processing** Tab please maintain following parameters:
 
-<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_08.png)
+- "Run on a single worker node" = active
+- "Parallel consumers" = 10
+- "Queue Name = "HOW_EOIO_PQ_{{participant}}"
+- "Acknowledgement Mode" = "Automatic On Exchange Complete" 
 
-9. Next, we need to add the message mapping. Click outside of the integration processes to be able to configure the integration flow components. From the integration flow configuration, switch to tab **References**. Within the references, switch to tab **Global**, and select Message Mapping from the **Add References** menu.
+<img width="1107" height="508" alt="image" src="https://github.com/user-attachments/assets/1d1ef04f-f1e0-4ea8-a423-ee80ecaba6d9" />
 
-<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_09.png)
+11. Next, we need to add the message mapping. Click outside of the integration processes to be able to configure the integration flow components. From the integration flow configuration, switch to tab **References**. Within the references, switch to tab **Global**, and select Message Mapping from the **Add References** menu.
 
-10. In the upcoming **References** dialog, select the beforehand added message mapping **MM EOIO - XX** and select **OK**.
+<img width="2271" height="825" alt="image" src="https://github.com/user-attachments/assets/8eb5037f-71b4-4914-92a7-97b7a2b02f28" />
 
-<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_10.png)
+12. In the upcoming **References** dialog, select the beforehand added message mapping **MM EOIO - XX** and select **OK**.
 
-11. The message mapping should be placed behind the Groovy script of the **Integration Process: Consumer flow**. Select the flow step **Add custom header props** and select the **Plus** icon of the quick menu to add a new flow step.
+<img width="1568" height="994" alt="image" src="https://github.com/user-attachments/assets/f15b4176-97a8-474d-96b0-6126fec59516" />
 
-<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_11.png)
+13. The message mapping should be assigned behind the Router condition in the Step "Message Mapping" in the **Integration Process: Consumer flow**. Select the flow step **Message Mapping**, select the **Processing** Tab and click Select.
 
-12. Select the entry **Message Mapping** from the **Add Flow Step**. If the **Message Mapping** entry is not listed in the **Recommended Steps** section, search for it and then select the same.
+<img width="1695" height="877" alt="image" src="https://github.com/user-attachments/assets/a6db52a9-008d-4a8b-9df9-e9348b1d48cf" />
 
-<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_12.png)
+14. Choose the "Global Ressources" Tab and Select the Message Mapping "MM_EIOI_<your participant id>". In my case MM_EOIO_XX:
 
-13. Select the added message mapping flow step, and switch to tab **Processing**. Then, select **Select**.
+<img width="922" height="271" alt="image" src="https://github.com/user-attachments/assets/2e0bb9ea-dfb1-415e-9438-3cb0f0d2f85e" />
 
-<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_13.png)
+15. XI Receiver: This was already set up in Ex. 1. In this Iflow everything is prepared on XI Receiver already, so nothing to do there.
 
-14. In the upcoming dialog, switch to tab **Global Resources**, and select your message mapping **MM_EOIO__XX**. Select **OK**.
+16. Save your Integration Flow as a Version.
 
-<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_14.png)
+## Exercise 1.4 - Configure Queue on AEM Broker
 
-15. Next, we need to pass the quality of service and a queue id to the XI receiver adapter. Select the message mapping flow step, and add a new flow step from the quick menu like before.
+1. Open up the Broker Manager here:
+  
+   https://mr-connection-h91kb3o1b6w.messaging.solace.cloud:943/?_gl=1*v2iwkf*_gcl_au*MTQ1MTI1NTAyNC4xNzU2OTAxMDU0LjU1OTA2MDg5Ni4xNzU3MzMyOTk3LjE3NTczMzMwMTc.*_ga*MTc3MjY3NjI1OS4xNzExNjMzNDUy*_ga_XZ3NWMM83E*czE3NTczNDEzMzMkbzI2NiRnMSR0MTc1NzM0MTM0OSRqNDQkbDAkaDA.#/msg-vpns/YWVtX2NvbW11bml0eWNlbnRyYWw=?token=YWJj.eyJhY2Nlc3NfdG9rZW4iOiAibWlzc2lvbi1jb250cm9sLW1hbmFnZXI6NjJlYWZzZTNmdTdrOHEyZjFkdmdvMXM1cjEifQ%3D%3D.eHl6&title=AEM_CommunityCentral&subtitle=aem_communitycentral
 
-<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_15.png)
+2. Create a Queue with Name "HOW_EOIO_PQ_<your participant Number", e.g. HOW_EOIO_PQ_XX
+   <img width="2542" height="385" alt="image" src="https://github.com/user-attachments/assets/193fce22-8659-466d-97c4-5ffde2ac4831" />
 
-16. In the **Add Flow Step**, select the **Content Modifier** entry below **Transformation**.
+3. Change the Access Type to "Non-Exclusive and the Partition Count as well as the Maximum Consumer Count to 10
+   <img width="1210" height="670" alt="image" src="https://github.com/user-attachments/assets/72802c59-0f44-4863-bcaf-8d33c63a6e17" />
 
-<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_16.png)
+4. Open up Advanced Settings
 
-17. Select the added **Content Modifier** flow step, and switch to the **Message Header** tab. Add two new headers as follows:
+<img width="2541" height="643" alt="image" src="https://github.com/user-attachments/assets/b77e466c-dbdd-4c11-98b3-554146e13783" />
+   
+5. Change "Maximum Delivered Unacknowledged Messages per Flow" to 1 (needed for EOIO)
+<img width="1570" height="955" alt="image" src="https://github.com/user-attachments/assets/7c50ba43-d9a9-4303-9aa8-9d7172cc02b0" />
 
-      |Name                 | Source Type | Source Value        |
-      | ------------------- | ------------| ------------------- | 
-      | SapQueueId          | Header      | SapPlainSoapQueueId |
-      | SapQualityOfService | Header      | SapPlainSoapQoS     |
+6. Apply your configuration
 
-**Note**: The headers **SapPlainSoapQoS** and **SapPlainSoapQueueId** are passed to the integraiton flow via the SAP RM adapter.
+7. Just FYI: The required connection details for the CLoud Integration Flow can be derived from the AEM Cluster Manager (in the AEM Dashboard outside of the Broker Manager)
 
-For your convenience, you can copy the header values from here:
+   <img width="2555" height="905" alt="image" src="https://github.com/user-attachments/assets/46d50e3f-e6e0-42e4-888f-7cc42d4459fb" />
 
-```yaml
-SapQueueId
-```
-```yaml
-SapPlainSoapQueueId
-```
-```yaml
-SapQualityOfService
-```
-```yaml
-SapPlainSoapQoS
-```
-
-<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_17.png)
-
-18. Next, we need to configure the connection between the message end event and the Receiver of adapter type **XI**. Select the connection and switch to the **Delivery Assurance** tab. Maintain the parameters as follows:
-
-As **XI Message ID Determination**, select **Map** from the drop down list.
-
-Maintain **Source for XI Message ID** as
-```yaml
-${header.SapMessageIdEx}
-```
-
-As **Quality Of Service**, keep **Handled by Integration Flow**.
-
-<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_18.png)
-
-19. Finally **Save** your changes and then **Cancel** so that you can proceed with configuring the flow.
-
-<br>![image](/exercises/ex1/images/01_02_ModelIntegrationFlow_19.png)
-
+The connection details are provided in the Table in the next Step.
 
 ## Exercise 1.3 - Configure and Deploy your Integration Flow
 
 In the following, you will configure and deploy the beforehand modified integration flow.
     
-1.  After having saved and canceled, you should see the **Configure** button on the upper right. Select **Configure**.
+1.  After having saved and canceled, you should see the **Configure** button on the upper right. Select **Configure**. Here you can set up the Connection Details for AEM and your participent Number:
 
-<br>![image](/exercises/ex1/images/01_03_Deploy_01.png)
+|Name                   | Value                                                         |
+| ----------------------| --------------------------------------------------------------| 
+| AEM_Host                  | tcps://mr-connection-h91kb3o1b6w.messaging.solace.cloud:55443 | 
+| AEM_MessageVPN           | aem_communitycentral                                          |
+| AEM_Username              | solace-cloud-client                                           |
+| AEM_AuthenticationType   | Basic                                                         |
+| AEM_PasswordSecureAlias | RampUp_AEM_User                                               |
+
+<img width="1152" height="494" alt="image" src="https://github.com/user-attachments/assets/564f0720-1689-4827-ab8c-e83008798609" />
+
+The "Password Secure Alias" is the a Basic User Credential defined in Monitor -> Manage Security -> Security Material
+
+<img width="1582" height="918" alt="image" src="https://github.com/user-attachments/assets/4d1e6550-ccc2-41d5-ad27-2313b53278db" />
+
     
-2. In the configuration dialog, on tab **Sender**, maintain the value of the **participant** parameter. Replace **XX** of the preconfigured value **UserXX** with the number assigned to you. The value of the parameter is actually appended to the integration flow end point to ensure a unique end point deployed on the tenant. Furthermore, the value equals the JMS queue name. Then **Save** and **Deploy**.
+2. In the configuration dialog, on tab **Sender**, same as for Exercise 1: maintain the value of the **participant** parameter. Replace **XX** of the preconfigured value **UserXX** with the number assigned to you. The value of the parameter is actually appended to the integration flow end point to ensure a unique end point deployed on the tenant. Furthermore, the value is part of the partitioned Queue Name on AEM. Then **Save** and **Deploy**.
 
 <br>![image](/exercises/ex1/images/01_03_Deploy_02.png)
 
