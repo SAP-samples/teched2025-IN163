@@ -147,21 +147,20 @@ Note that we are here externalizing parts of the parameters so we can only assig
 
 2. Create a Queue with Name "HOW_EOIO_PQ_User<your participant Number", e.g. HOW_EOIO_PQ_UserXX
 
-  <img width="1251" height="613" alt="image" src="https://github.com/user-attachments/assets/7648ad11-4d06-4888-a0b1-10cbdc5c2877" />
-
 3. Change the Access Type to "Non-Exclusive and the Partition Count as well as the Maximum Consumer Count to 10
-   <img width="1210" height="670" alt="image" src="https://github.com/user-attachments/assets/72802c59-0f44-4863-bcaf-8d33c63a6e17" />
+<img width="1168" height="611" alt="image" src="https://github.com/user-attachments/assets/98761960-8401-4821-baff-e3eb5d2d8514" />
 
 4. Open up Advanced Settings
 
-<img width="2541" height="643" alt="image" src="https://github.com/user-attachments/assets/b77e466c-dbdd-4c11-98b3-554146e13783" />
+<img width="1553" height="629" alt="image" src="https://github.com/user-attachments/assets/fd1dc9d7-f9ad-4bb4-9528-884dabed7431" />
    
 5. Change "Maximum Delivered Unacknowledged Messages per Flow" to 1 (needed for EOIO)
-<img width="1570" height="955" alt="image" src="https://github.com/user-attachments/assets/7c50ba43-d9a9-4303-9aa8-9d7172cc02b0" />
+
+<img width="1532" height="505" alt="image" src="https://github.com/user-attachments/assets/e28f3ba5-7a7d-480c-ac5b-b3a00d791819" />
 
 6. Apply your configuration
 
-7. Just FYI: The required connection details for the CLoud Integration Flow can be derived from the AEM Cluster Manager (in the AEM Dashboard outside of the Broker Manager)
+7. FYI: The required connection details for the CLoud Integration Flow can be derived from the AEM Cluster Manager (in the AEM Dashboard outside of the Broker Manager)
 
    <img width="2555" height="905" alt="image" src="https://github.com/user-attachments/assets/46d50e3f-e6e0-42e4-888f-7cc42d4459fb" />
 
