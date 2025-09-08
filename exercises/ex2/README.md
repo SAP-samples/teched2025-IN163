@@ -145,8 +145,9 @@ Note that we are here externalizing parts of the parameters so we can only assig
   
    https://mr-connection-h91kb3o1b6w.messaging.solace.cloud:943/?_gl=1*v2iwkf*_gcl_au*MTQ1MTI1NTAyNC4xNzU2OTAxMDU0LjU1OTA2MDg5Ni4xNzU3MzMyOTk3LjE3NTczMzMwMTc.*_ga*MTc3MjY3NjI1OS4xNzExNjMzNDUy*_ga_XZ3NWMM83E*czE3NTczNDEzMzMkbzI2NiRnMSR0MTc1NzM0MTM0OSRqNDQkbDAkaDA.#/msg-vpns/YWVtX2NvbW11bml0eWNlbnRyYWw=?token=YWJj.eyJhY2Nlc3NfdG9rZW4iOiAibWlzc2lvbi1jb250cm9sLW1hbmFnZXI6NjJlYWZzZTNmdTdrOHEyZjFkdmdvMXM1cjEifQ%3D%3D.eHl6&title=AEM_CommunityCentral&subtitle=aem_communitycentral
 
-2. Create a Queue with Name "HOW_EOIO_PQ_<your participant Number", e.g. HOW_EOIO_PQ_XX
-   <img width="2542" height="385" alt="image" src="https://github.com/user-attachments/assets/193fce22-8659-466d-97c4-5ffde2ac4831" />
+2. Create a Queue with Name "HOW_EOIO_PQ_User<your participant Number", e.g. HOW_EOIO_PQ_UserXX
+
+  <img width="1251" height="613" alt="image" src="https://github.com/user-attachments/assets/7648ad11-4d06-4888-a0b1-10cbdc5c2877" />
 
 3. Change the Access Type to "Non-Exclusive and the Partition Count as well as the Maximum Consumer Count to 10
    <img width="1210" height="670" alt="image" src="https://github.com/user-attachments/assets/72802c59-0f44-4863-bcaf-8d33c63a6e17" />
