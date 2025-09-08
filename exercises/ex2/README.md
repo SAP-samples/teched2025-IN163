@@ -5,10 +5,12 @@ In this exercise, we will model and run an integration flow supporting Exactly O
 - By using a queue, the message sequence can be preserved
 - By using a partitioned queue, we enable parallelization to a certain extend (depends on the number of partitions)
 
-situation with **exclusive JMS Queue**: A message fails and is retried automatically until the message is successfully delivered. As long as the failed message is in retry, **all successor messages** are kept on hold to ensure that they don't overtake the predecessor message.
+Situation with **exclusive JMS Queue**: A message fails and is retried automatically until the message is successfully delivered. As long as the failed message is in retry, **all successor messages** are kept on hold to ensure that they don't overtake the predecessor message.
 situation with **partitioned AEM Queue**: A message fails and is retried automatically until the message is successfully delivered. As long as the failed message is in retry, **all successor messages in the same partition** (same Partition Key Hash) are kept on hold to ensure that they don't overtake the predecessor message.
 
-In the exercise, you won't start from scratch, instead you will use a template so that you can focus on the Exactly Once In Order specific settings only. In our example integration flow, a message is sent to an **SAP RM sender adapter** and directly stored in a partitioned queue on AEM to guarantee message retry in case of a message processing error. The SAP RM protocol extends the plain SOAP protocol to support Exactly Once and Exactly Once In Order delivery by providing SAP proprietary SOAP headers or query parameters. To support Exactly Once, a **message id** needs to be passed to the integration flow. For Exactly Once In Order delivery, you need to transfer a **queue id** to the integration flow. If a queue ID is present, the quality of service is implicitly determined as Exactly Once In Order. There difference to exercise one is that AEM is not running inside of the Integration Suite Tenant, so you´ll need to provide **connection details**. Additionally to the Queue ID on AEM you´ll also need to provide the User Property **"JMSXGroupID"** to AEM as Key Value for the generation of the Partition Key Hash. Based on this the messages are distributed across the queue partitions.
+In the exercise, you won't start from scratch, instead you will use a template so that you can focus on the Exactly Once In Order specific settings only. In our example integration flow, a message is sent to an **SAP RM sender adapter** and directly stored in a partitioned queue on AEM to guarantee message retry in case of a message processing error. The SAP RM protocol extends the plain SOAP protocol to support Exactly Once and Exactly Once In Order delivery by providing SAP proprietary SOAP headers or query parameters. To support Exactly Once, a **message id** needs to be passed to the integration flow. For Exactly Once In Order delivery, you need to transfer a **queue id** to the integration flow. If a queue ID is present, the quality of service is implicitly determined as Exactly Once In Order. 
+
+There difference to exercise 1 is that AEM is not running inside of the Integration Suite Tenant, so you´ll need to provide **connection details**. Additionally to the Queue ID on AEM you´ll also need to provide the User Property **"JMSXGroupID"** to AEM as Key Value for the generation of the Partition Key Hash. Based on this the messages are distributed across the queue partitions.
 
 Since AEM offers a lot of settings for Queues, In contrast to exercise 1 the Queue is not just created by maintaining it in the channel. You actively have to open up the **AEM Broker Manager** and create the Queue explicitly + predefine how many partitions and consumers you need. For EOIO the most important parameter here is **"Maximum Delivered Unacknowledged Messages per Flow"** in Advanced Settings. If the value here is not 1, EOIO is not guaranteed. 
 
@@ -23,6 +25,10 @@ In order to simulate the error situation, we will use a re-usable message mappin
 ## Exercise 1.1 - Undeploy Message Mapping from Exercise 1
 
 Since we are using the same Message Mapping, this needs to be undeployed before starting with Exercise 2.
+
+Go to Monitoring -> Integrations and APIs-> Manage Integration Content. Then filter based on your MessageMapping Name MM EOIO - XX
+
+<img width="2543" height="584" alt="image" src="https://github.com/user-attachments/assets/6a73c2ff-ecc9-4550-aff5-68a8e8f23d23" />
 
 ## Exercise 1.2 - Copy Provided Templates
 
@@ -64,7 +70,7 @@ Please Name your Externalized Parameters for all of the Parameters
 | AuthenticationType   | {{AEM_AuthenticationType}}                                                         |
 | PasswordSecureAlias | {{AEM_PasswordSecureAlias}}                                               |
 
-<img width="1014" height="467" alt="image" src="https://github.com/user-attachments/assets/1c006c6c-27f1-4453-a3b3-02d348a49985" />
+<img width="996" height="457" alt="image" src="https://github.com/user-attachments/assets/b0d784b3-4d18-4fc7-801d-85f9d9326357" />
    
 7. Select the **Processing** Tab. Change the Parameters:
 
