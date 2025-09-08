@@ -86,11 +86,12 @@ Note that we are here externalizing parts of the parameters so we can only assig
 | ----------------------| ----------------------------|
 | Sender ID         | ${header.SAP_Receiver}    |
 
-   In the User Properties please add the JMSXGroupID
+   In the User Properties please add the JMSXGroupID and purchaseOrder
 
 |Key            | Value                         |    
 | --------------| ----------------------------|
 | JMSXGroupID    | ${header.SapPlainSoapQueueId} |
+| purchaseOrder    | ${header.purchaseOrder} |
    
 
 9. Scroll down to the **Integration Process: Consumer flow**, and add a AEM sender connection between the Sender and the message start event. On the tab **Connection** of the JMS sender adapter, maintain the same externalized parameters as in the AEM Receiver Channel in the upper Flow.
@@ -198,53 +199,69 @@ The "Password Secure Alias" is the a Basic User Credential defined in Monitor ->
 
 Now you are all set to test your scenario!
 
-## Exercise 1.4 - Test and Monitor
+## Exercise 1.5 - Test and Monitor
 
 To test your configuration scenario, we use the Bruno API client application for which we have provided a collection with pre-configured sample requests. As a prerequisite to test your integration scenario using the Bruno API client, you should have gone through [Setup Bruno API client](../ex0#setup-bruno-api-client/). If not, do the setup, then come back and proceed with the steps below.
 
-1. Open the Bruno application on your laptop, expand the **EOIO Hands-on Workshop** collection and the **EOIO via Exclusive Queue** folder. Select the **Post Order in Sequence** POST request. Ensure that the right environment is selected which defines the host name of the tenant, the client id and the secret. Depending on which tenant you use in the exercises, select either **eu-02a** or **eu-02b**. In the provided URL, the **participant** variable should hold your user number <b>XX</b> assigned to you assuming that you have properly configured the parameter in the Bruno API client setup. The message GUID passed to the integration flow is automatically generated. Trigger a message by selecting the **Send Request** button on the upper right. The request should return HTTP code **202 Accepted**.
+1. Open the Bruno application on your laptop, expand the **EOIO Hands-on Workshop** collection and the **EOIO via Exclusive Queue** folder. Select the **Post Order in Sequence to AEM** POST request. Ensure that the right environment is selected which defines the host name of the tenant, the client id and the secret. Depending on which tenant you use in the exercises, select either **eu-02a** or **eu-02b**. In the provided URL, the **participant** variable should hold your user number <b>XX</b> assigned to you assuming that you have properly configured the parameter in the Bruno API client setup. The message GUID passed to the integration flow is automatically generated. Trigger a message by selecting the **Send Request** button on the upper right. The request should return HTTP code **202 Accepted**. In our first Test we leave the QueueID = "12345", so the Mapping does not get executed.
 
-<br>![](/exercises/ex1/images/01_04_Test_01.png)
+<img width="2559" height="974" alt="image" src="https://github.com/user-attachments/assets/179c053c-741c-4639-a55e-e8aea6c3c848" />
 
-2. Now, let's send another message. For this, increase the **PurchaseOrderNumber** in the **Body** of the request. Then trigger a message by selecting the **Send Request** button on the upper right. The request should return HTTP code **202 Accepted**. If you like, you can send a couple of more messages.
+2. Navigate back to the monitoring page of Cloud Integration, and select the link **Monitor Message Processing**
 
-<br>![](/exercises/ex1/images/01_04_Test_02.png)
+<img width="1346" height="735" alt="image" src="https://github.com/user-attachments/assets/658da656-c994-4ff5-92c9-2a79eb6ed553" />
 
-3. Navigate back to the monitoring page of Cloud Integration, and select the link **Monitor Message Processing** from your deployed integration flow **EOIO Exclusive Queue - XX**.
+Then Filter for your Iflow
 
-<br>![](/exercises/ex1/images/01_04_Test_03.png)
+<img width="1962" height="308" alt="image" src="https://github.com/user-attachments/assets/da7ea13d-3dcd-44d1-ba9e-5c87a75b962c" />
 
-4. In the **Monitor Message Processing**, you should see three new logs belonging to your participant ID (assuming that you have triggered two test messages, otherwise you may see more logs). Two logs are in status **Completed** with Sender **TestClient_UserXX** and Receiver **JMSXQ_UserXX**. Those are the messages which went through the provider flow and which were put into the exclusive queue. In the **Custom Headers** section of the log, you should see the value of the **QueueID** and the value of the **OrderID** passed from the test client. Furthermore, the Quality of Order **QoS** is automatically set to **ExactlyOnceInOrder**.
+You can also filter based on QueueID
 
-<br>![](/exercises/ex1/images/01_04_Test_04.png)
+<img width="2533" height="890" alt="image" src="https://github.com/user-attachments/assets/5b380d09-63df-4888-b104-5541f31c6d0a" />
 
-5. Select the second log in status **Completed**. As you can see from the **OrderID** value, this log belongs to the second message that you sent.
+or purchaseOrder (Custom Header = OrderID)
 
-<br>![](/exercises/ex1/images/01_04_Test_05.png)
+<img width="2500" height="937" alt="image" src="https://github.com/user-attachments/assets/a41fee96-744c-4f58-81e8-ff8ba50864a8" />
 
-6. Select the third log which is in status **Retry**. This is the message which was read from the exclusive queue via the consumer flow and were we intentionally forced an error. Here, the Sender should be **JMSXQ_UserXX** and the Receiver **MockedXIReceiver**. As you can see from the **Error Details**, the message went into an error because the referenced message mapping artifact is not available. Note, the second message is in sort of hold status as long as the predecessor message hasn't been either successfully processed or canceled. For this reason, we only see one log entry for the consumer flow.
+You should see 2 messages here: the first (bottom) is the message from the client to AEM, the second (top) is the Consumer from AEM to XI. You can identify it based on the Sender and Receiver Header.
 
-<br>![](/exercises/ex1/images/01_04_Test_06.png)
+<img width="1970" height="666" alt="image" src="https://github.com/user-attachments/assets/0eae798f-687c-4fe9-884c-4b0be15e620e" />
 
-7. Let's fix the error by deploying the referenced message mapping artifact. Navigate back to your integration package **User XX** with **XX** the number assigned to you, and select the **Deploy** entry from the **Actions** menu of your message mapping **MM EOIO- XX**.
+Our Mapping is only triggered when QueueID != 12345. So let´s send another 2 Messages from Bruno with QueueID = 123456 and 2 more with QueueID = 67891 
 
-<br>![](/exercises/ex1/images/01_04_Test_07.png)
+<img width="2138" height="514" alt="image" src="https://github.com/user-attachments/assets/1a18236f-fd16-480f-9d38-c3715fd7a4a7" />
 
-8. Once deployed, you should see a toast message on the bottom of the screen.
+You should see now fore each QueueID two Message with Status "Completed". These are the Messages From the Client to AEM. Then there should be 1 Retry Message. This means AEM will try to push the message again in certain periods (defined in the Queue in AEM Broker Management).
 
-<br>![](/exercises/ex1/images/01_04_Test_08.png)
+Let´s check in AIM (https://mr-connection-h91kb3o1b6w.messaging.solace.cloud:943/?_gl=1*qknv9f*_gcl_au*MTQ1MTI1NTAyNC4xNzU2OTAxMDU0LjU1OTA2MDg5Ni4xNzU3MzMyOTk3LjE3NTczMzMwMTc.*_ga*MTc3MjY3NjI1OS4xNzExNjMzNDUy*_ga_XZ3NWMM83E*czE3NTczNDEzMzMkbzI2NiRnMSR0MTc1NzM0MjcwMCRqMzkkbDAkaDA.#/msg-vpns/YWVtX2NvbW11bml0eWNlbnRyYWw=?token=YWJj.eyJhY2Nlc3NfdG9rZW4iOiAibWlzc2lvbi1jb250cm9sLW1hbmFnZXI6NjJlYWZzZTNmdTdrOHEyZjFkdmdvMXM1cjEifQ%3D%3D.eHl6&title=AEM_CommunityCentral&subtitle=aem_communitycentral) 
 
-9. Navigate back to the **Monitor Message Processing** and **Refresh**. The log of your first order should have changed from Status **Retry** to **Completed**
+<img width="2028" height="648" alt="image" src="https://github.com/user-attachments/assets/0786d61d-4053-4400-8113-2b302aa09eae" />
 
-<br>![](/exercises/ex1/images/01_04_Test_09.png)
+We can see that AEM has distributed the Messages to Partition 2 and 6. You can also see more if you  click one partition and on "Messages Queued". 
 
-10. Furthermore, you should see a new log in status **Completed** belonging to the second order sent.
+<img width="2545" height="565" alt="image" src="https://github.com/user-attachments/assets/d82d05e4-d2f4-4dd1-8001-f25d914c025a" />
 
-<br>![](/exercises/ex1/images/01_04_Test_10.png)
+This means that these 2 Partitions are blocked until the error is resolved. If I send another Message with QueueID = "12345", it should go through, unless it is assigned to one of the blocked partitions. Let´s try it:
+
+<img width="2138" height="501" alt="image" src="https://github.com/user-attachments/assets/92536e05-8e09-411c-9fb3-34825c266f04" />
+
+We can see in the Message Monitoring that it is completed:
+<img width="2172" height="429" alt="image" src="https://github.com/user-attachments/assets/0128c097-ac29-4497-b1eb-9da447a32c21" />
+
+Now let´s deploy the Message Mapping again:
+
+<img width="2307" height="492" alt="image" src="https://github.com/user-attachments/assets/4d73e5ea-f18c-4632-bd50-fac07bd94e3e" />
+
+Now after Refresh on AEM the Queues are clear:
+
+<img width="2325" height="609" alt="image" src="https://github.com/user-attachments/assets/525de94c-8416-4f6f-bf40-ace342249f9e" />
+
+and Messages with QueueID 123456 & 67891 are completed
+
+<img width="2257" height="870" alt="image" src="https://github.com/user-attachments/assets/38a150b2-e351-42fe-a1a3-3c612b427fa5" />
+
 
 
 ## Summary
 
-Congratulations. You have successfully modelled and tested an Exactly Once In Order scenario using Exclusive Queues.
-
-Continue to - [Exercise 2 - Exactly Once In Order scenario using partitioned queues](../ex2/README.md)
+Congratulations. You have successfully modelled and tested an Exactly Once In Order scenario using Partitioned Queues.
