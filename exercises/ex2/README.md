@@ -264,7 +264,7 @@ Now let´s deploy the Message Mapping again:
 
 Now after Refresh on AEM the Queues are clear:
 
-<img width="2325" height="609" alt="image" src="https://github.com/user-attachments/assets/525de94c-8416-4f6f-bf40-ace342249f9e" />
+<img width="1554" height="703" alt="image" src="https://github.com/user-attachments/assets/90e7d703-0165-402f-90e2-1b6a85db5aff" />
 
 and Messages with QueueID 123456 & 67891 are completed
 
