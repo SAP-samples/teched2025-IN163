@@ -64,11 +64,11 @@ Now that you have copied the provided templates, we should be all set to enhance
    
 7. Select the **Processing** Tab. Change the Paramters:
 
-       |Name                   | Value                       |
-       | ----------------------| ----------------------------| 
-       | Delivery Mode         | Persistent (Guaranteed)     |
-       | Endpoint Type         | Queue                       |
-       | Desintation Name      | HOW_EOIO_PQ_{{participant}} | 
+       | Name                   | Value                        |
+       | ----------------------| ---------------------------- | 
+       | Delivery Mode         | Persistent (Guaranteed)      |
+       | Endpoint Type         | Queue                        |
+       | Desintation Name      | HOW_EOIO_PQ_{{participant}}  | 
 
 8. In the **Message Properties** Tab please add these Properties:
 
