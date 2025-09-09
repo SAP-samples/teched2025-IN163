@@ -23,21 +23,21 @@ For an improved monitoring of the exchanged messages, we have configured the cor
 
 In order to simulate the error situation, we will use a re-usable message mapping in the integration flow as global resource which we intentionally won't deploy in the first place. To resolve the error, we will simply deploy the message mapping artifact. The failed message and all successor messages which were on hold will be eventually successfully delivered after an automatic retry.
 
-## Exercise 1.1 - Undeploy Message Mapping from Exercise 1
+## Exercise 2.1 - Undeploy Message Mapping from Exercise 1
 
-Since we are using the same Message Mapping, this needs to be undeployed before starting with Exercise 2.
+Since we use the same Message Mapping like in Exercise 1, this needs to be undeployed before starting with Exercise 2 to be able to force an error situation.
 
-Go to Monitoring -> Integrations and APIs-> Manage Integration Content. Then filter based on your MessageMapping Name MM EOIO - XX
+Navigate to **Monitoring > Integrations and APIs > Manage Integration Content**. Then filter based on your message mapping Name **MM EOIO - XX**. Select **Undeploy** to undeploy your message mapping artifact.
 
 <img width="2543" height="584" alt="image" src="https://github.com/user-attachments/assets/6a73c2ff-ecc9-4550-aff5-68a8e8f23d23" />
 
-## Exercise 1.2 - Copy Provided Templates
+## Exercise 2.2 - Copy Provided Template
 
-The copying process was explained in Exercise 1. Please copy the Iflow "EOIO Partitioned Queue - Template" analogous to the first Iflow into your Package.
+In the following, you will copy the provided integration flow to your package. As you did this before in Exercise 1, we won't describe this in detail here. Run through the similar steps like in Exercise 1.1 to copy the integration flow template **EOIO Partitioned Queue - Template** to your package **User XX** with **XX** the ID assigned to you. As name for the copied integration flow, choose **EOIO Partitioned Queue - XX**. This time, you do not need to copy the message mapping template as we will reuse the message mapping from Exercise 1.
 
-## Exercise 1.3 - Model your Integration Flow
+## Exercise 2.3 - Model your Integration Flow
 
-Now that you have copied the provided templates, we should be all set to enhance the copied integration flow model to ensure Exactly Once In Order delivery.
+Now that you have copied the provided template, we should be all set to enhance the copied integration flow model to ensure Exactly Once In Order delivery.
     
 1.  In your package, select the copied integration flow **EOIO Partitioned Queue - XX** with **XX** the ID assigned to you to open the model designer.
 
@@ -58,10 +58,8 @@ Now that you have copied the provided templates, we should be all set to enhance
 5. In the upcoming dialog, select the Adapter Type **AdvancedEventMesh**. 
 
 <img width="1025" height="366" alt="image" src="https://github.com/user-attachments/assets/a25e7b6c-5c9e-49a3-9633-856fee55aaed" />
-   
-6. Select the AEM connection. In the Properties section of the AEM receiver adapter, switch to the **Connection** tab, and click on "externalize":
 
-Please Name your Externalized Parameters for all of the Parameters
+6. Select the AEM connection. In the **Properties** section of the AEM receiver adapter, click on **Externalize**. On the **Externalization** dialog, stay on tab **Conenction**, and maintain the Externalized Parameters as follows. When done, select **OK**.
 
 |Name                   | Value                                                         |
 | ----------------------| --------------------------------------------------------------| 
@@ -73,7 +71,7 @@ Please Name your Externalized Parameters for all of the Parameters
 
 <img width="996" height="457" alt="image" src="https://github.com/user-attachments/assets/b0d784b3-4d18-4fc7-801d-85f9d9326357" />
    
-7. Select the **Processing** Tab. Change the Parameters:
+7. Switch to the **Processing** tab. Change the Parameters as follows:
 
 | Name              | Value                       |
 | ----------------- | --------------------------- |
@@ -87,13 +85,13 @@ Note that we are here externalizing parts of the parameters so we can only assig
 {{participant}}
 ```
 
-8. In the **Message Properties** Tab please add these Properties:
+8. Switch to the **Message Properties** tab and add the following Properties:
 
 |Name                   | Value                       |
 | ----------------------| ----------------------------|
 | Sender ID         | ${header.SAP_Receiver}    |
 
-   In the User Properties please add the JMSXGroupID and purchaseOrder
+In the User Properties please add the **JMSXGroupID** and **purchaseOrder**. When done
 
 |Key            | Value                         |    
 | --------------| ----------------------------|
