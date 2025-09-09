@@ -89,6 +89,7 @@ Note that we are here externalizing parts of the parameters so we can only assig
 
 |Name                   | Value                       |
 | ----------------------| ----------------------------|
+| Application Message ID         | ${header.SapMessageIdEx}    |
 | Sender ID         | ${header.SAP_Receiver}    |
 
 Scroll down to the **User Properties** section, add the **JMSXGroupID** and **purchaseOrder** properties.
