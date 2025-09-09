@@ -59,7 +59,7 @@ Now that you have copied the provided template, we should be all set to enhance 
 
 <img width="1025" height="366" alt="image" src="https://github.com/user-attachments/assets/a25e7b6c-5c9e-49a3-9633-856fee55aaed" />
 
-6. Select the AEM connection. In the **Properties** section of the AEM receiver adapter, click on **Externalize**. On the **Externalization** dialog, stay on tab **Conenction**, and maintain the Externalized Parameters as follows. When done, select **OK**.
+6. Select the AEM connection. In the **Properties** section of the AEM receiver adapter, click on **Externalize**. On the **Externalization** dialog, stay on tab **Connection**, and maintain the Externalized Parameters as follows. When done, select **OK** to close the **Externalization** dialog.
 
 |Name                   | Value                                                         |
 | ----------------------| --------------------------------------------------------------| 
@@ -71,7 +71,7 @@ Now that you have copied the provided template, we should be all set to enhance 
 
 <img width="996" height="457" alt="image" src="https://github.com/user-attachments/assets/b0d784b3-4d18-4fc7-801d-85f9d9326357" />
    
-7. Switch to the **Processing** tab. Change the Parameters as follows:
+7. Switch to the **Processing** tab. Maintain the Parameters as follows:
 
 | Name              | Value                       |
 | ----------------- | --------------------------- |
@@ -91,7 +91,7 @@ Note that we are here externalizing parts of the parameters so we can only assig
 | ----------------------| ----------------------------|
 | Sender ID         | ${header.SAP_Receiver}    |
 
-In the User Properties please add the **JMSXGroupID** and **purchaseOrder**. When done
+Scroll down to the **User Properties** section, add the **JMSXGroupID** and **purchaseOrder** properties.
 
 |Key            | Value                         |    
 | --------------| ----------------------------|
@@ -99,7 +99,7 @@ In the User Properties please add the **JMSXGroupID** and **purchaseOrder**. Whe
 | purchaseOrder    | ${header.purchaseOrder} |
    
 
-9. Scroll down to the **Integration Process: Consumer flow**, and add a AEM sender connection between the Sender and the message start event. On the tab **Connection** of the JMS sender adapter, maintain the same externalized parameters as in the AEM Receiver Channel in the upper Flow.
+9. In the integration flow model, scroll down to the **Integration Process: Consumer flow**, and add an AEM sender connection between the Sender and the message start event. In the **Properties** section of the AEM sender adapter, click on **Externalize** and maintain the same externalized parameters as in the AEM Receiver Channel before. When done, select **OK** to close the **Externalization** dialog.
 
 |Name                   | Value                                                         |
 | ----------------------| --------------------------------------------------------------| 
@@ -109,12 +109,14 @@ In the User Properties please add the **JMSXGroupID** and **purchaseOrder**. Whe
 | AuthenticationType   | {{AEM_AuthenticationType}}                                                         |
 | PasswordSecureAlias | {{AEM_PasswordSecureAlias}}                                               |
   
-10. In the **Processing** Tab please maintain following parameters:
+10. Switch to the **Processing** tab, and maintain the following parameters:
 
-- "Run on a single worker node" = active
-- "Parallel consumers" = 10
-- "Queue Name = "HOW_EOIO_PQ_{{participant}}"
-- "Acknowledgement Mode" = "Automatic On Exchange Complete" 
+| Name              | Value                       |
+| ----------------- | --------------------------- |
+| Run on a single worker node     | Select the check box    |
+| Parallel consumers     | 10                       |
+| Queue Name  | HOW_EOIO_PQ_{{participant}} |
+| Acknowledgement Mode  | Automatic On Exchange Complete |
 
 <img width="1107" height="508" alt="image" src="https://github.com/user-attachments/assets/1d1ef04f-f1e0-4ea8-a423-ee80ecaba6d9" />
 
@@ -126,67 +128,61 @@ In the User Properties please add the **JMSXGroupID** and **purchaseOrder**. Whe
 
 <img width="1568" height="994" alt="image" src="https://github.com/user-attachments/assets/f15b4176-97a8-474d-96b0-6126fec59516" />
 
-13. The message mapping should be assigned behind the Router condition in the Step "Message Mapping" in the **Integration Process: Consumer flow**. Select the flow step **Message Mapping**, select the **Processing** Tab and click Select.
+13. The message mapping should be assigned behind the Router condition in the Step **Message Mapping** in the **Integration Process: Consumer flow**. Select the flow step **Message Mapping**, select the **Processing** tab and click **Select**.
 
 <img width="1695" height="877" alt="image" src="https://github.com/user-attachments/assets/a6db52a9-008d-4a8b-9df9-e9348b1d48cf" />
 
-14. Choose the "Global Ressources" Tab and Select the Message Mapping "MM_EIOI_<your participant id>". In my case MM_EOIO_XX:
+14. Choose the **Global Ressources** tab and select the beforehand added Message Mapping **MM_EOIO_XX** with **XX** the user ID assigned to you. Select **OK**.
 
 <img width="922" height="271" alt="image" src="https://github.com/user-attachments/assets/2e0bb9ea-dfb1-415e-9438-3cb0f0d2f85e" />
 
-15. XI Receiver: This was already set up in Ex. 1. In this Iflow everything is prepared on XI Receiver already, so nothing to do there.
+15. **Save** your Integration Flow.
 
-16. Save your Integration Flow as a Version.
-
-## Exercise 1.4 - Configure Queue on AEM Broker
+## Exercise 2.4 - Configure Queue on AEM Broker
 
 1. Open up the Broker Manager here:
   
    https://mr-connection-h91kb3o1b6w.messaging.solace.cloud:943/?_gl=1*v2iwkf*_gcl_au*MTQ1MTI1NTAyNC4xNzU2OTAxMDU0LjU1OTA2MDg5Ni4xNzU3MzMyOTk3LjE3NTczMzMwMTc.*_ga*MTc3MjY3NjI1OS4xNzExNjMzNDUy*_ga_XZ3NWMM83E*czE3NTczNDEzMzMkbzI2NiRnMSR0MTc1NzM0MTM0OSRqNDQkbDAkaDA.#/msg-vpns/YWVtX2NvbW11bml0eWNlbnRyYWw=?token=YWJj.eyJhY2Nlc3NfdG9rZW4iOiAibWlzc2lvbi1jb250cm9sLW1hbmFnZXI6NjJlYWZzZTNmdTdrOHEyZjFkdmdvMXM1cjEifQ%3D%3D.eHl6&title=AEM_CommunityCentral&subtitle=aem_communitycentral
 
-2. Create a Queue with Name "HOW_EOIO_PQ_User<your participant Number", e.g. HOW_EOIO_PQ_UserXX
+2. Create a Queue with Name **HOW_EOIO_PQ_UserXX** with **XX** the user ID assigned to you.
 
-3. Change the Access Type to "Non-Exclusive and the Partition Count as well as the Maximum Consumer Count to 10
+3. Change the Access Type to **Non-Exclusive** and the **Partition Count** as well as the **Maximum Consumer Count** to **10**.
 <img width="1168" height="611" alt="image" src="https://github.com/user-attachments/assets/98761960-8401-4821-baff-e3eb5d2d8514" />
 
-4. Open up Advanced Settings
+4. Open up the **Advanced Settings**.
 
 <img width="1553" height="629" alt="image" src="https://github.com/user-attachments/assets/fd1dc9d7-f9ad-4bb4-9528-884dabed7431" />
    
-5. Change "Maximum Delivered Unacknowledged Messages per Flow" to 1 (needed for EOIO)
+5. Change the parameter **Maximum Delivered Unacknowledged Messages per Flow** to **1** (needed for ensuring EOIO).
 
 <img width="1532" height="505" alt="image" src="https://github.com/user-attachments/assets/e28f3ba5-7a7d-480c-ac5b-b3a00d791819" />
 
-6. Apply your configuration
+6. **Apply** your configuration.
 
-7. FYI: The required connection details for the CLoud Integration Flow can be derived from the AEM Cluster Manager (in the AEM Dashboard outside of the Broker Manager)
+7. FYI: The required connection details for the Cloud Integration Flow can be derived from the AEM Cluster Manager (in the AEM Dashboard outside of the Broker Manager).
 
    <img width="2555" height="905" alt="image" src="https://github.com/user-attachments/assets/46d50e3f-e6e0-42e4-888f-7cc42d4459fb" />
 
-The connection details are provided in the Table in the next Step.
+Note: The connection details are provided in the table below.
 
-## Exercise 1.3 - Configure and Deploy your Integration Flow
+## Exercise 2.5 - Configure and Deploy your Integration Flow
 
 In the following, you will configure and deploy the beforehand modified integration flow.
     
-1.  After having saved and canceled, you should see the **Configure** button on the upper right. Select **Configure**. Here you can set up the Connection Details for AEM and your participent Number:
+1.  Navigate back to your integration flow, and select the **Configure** button on the upper right. If you can't see the button, you may first have to **Cancel** assuming that you have first saved your changes. Select **Configure**. In the upcoming dialog, stay on tab **Sender** and select the Sender **AEM_Sender** from the drop down menu. Set up the Connection Details for AEM and maintain your participant number as follows:
 
 |Name                   | Value                                                         |
 | ----------------------| --------------------------------------------------------------| 
-| AEM_Host                  | tcps://mr-connection-h91kb3o1b6w.messaging.solace.cloud:55443 | 
-| AEM_MessageVPN           | aem_communitycentral                                          |
-| AEM_Username              | solace-cloud-client                                           |
-| AEM_AuthenticationType   | Basic                                                         |
-| AEM_PasswordSecureAlias | RampUp_AEM_User                                               |
+| Host                  | tcps://mr-connection-h91kb3o1b6w.messaging.solace.cloud:55443 | 
+| Message VPN           | aem_communitycentral                                          |
+| AEM_Username          | solace-cloud-client                                           |
+| Authentication Type   | Basic                                                         |
+| Password Secure Alias | RampUp_AEM_User                                               |
+| participant           | UserXX with XX your user id                                   |
 
-<img width="1152" height="494" alt="image" src="https://github.com/user-attachments/assets/564f0720-1689-4827-ab8c-e83008798609" />
+Note: Because we use externalized parameters, the connection details for the AEM_Receiver adapter is automatically set.
 
-The "Password Secure Alias" is the a Basic User Credential defined in Monitor -> Manage Security -> Security Material
-
-<img width="1582" height="918" alt="image" src="https://github.com/user-attachments/assets/4d1e6550-ccc2-41d5-ad27-2313b53278db" />
-
-    
-2. In the configuration dialog, on tab **Sender**, same as for Exercise 1: maintain the value of the **participant** parameter. Replace **XX** of the preconfigured value **UserXX** with the number assigned to you. The value of the parameter is actually appended to the integration flow end point to ensure a unique end point deployed on the tenant. Furthermore, the value is part of the partitioned Queue Name on AEM. Then **Save** and **Deploy**.
+2. When done, **Save** and **Deploy**.
 
 <img width="1122" height="600" alt="image" src="https://github.com/user-attachments/assets/a04a147c-b63c-493b-8736-6845926f59fb" />
 
@@ -204,7 +200,7 @@ The "Password Secure Alias" is the a Basic User Credential defined in Monitor ->
 
 Now you are all set to test your scenario!
 
-## Exercise 1.5 - Test and Monitor
+## Exercise 2.6 - Test and Monitor
 
 To test your configuration scenario, we use the Bruno API client application for which we have provided a collection with pre-configured sample requests. As a prerequisite to test your integration scenario using the Bruno API client, you should have gone through [Setup Bruno API client](../ex0#setup-bruno-api-client/). If not, do the setup, then come back and proceed with the steps below.
 
