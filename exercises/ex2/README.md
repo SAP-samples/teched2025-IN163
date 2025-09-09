@@ -15,7 +15,7 @@ The difference to Exercise 1 is that AEM is not running inside of the SAP Integr
 
 Because AEM offers a lot of configuration options for setting up the Queues, in contrast to exercise 1 the Queue is not just created by maintaining it in the channel. You actively have to open up the **AEM Broker Manager** and create the Queue explicitly. Furthermore, you need to predefine how many partitions and consumers are required. For ensuring EOIO, the most important parameter here is **Maximum Delivered Unacknowledged Messages per Flow** in the Advanced Settings. If the value of this parameter is not 1, EOIO can not be guaranteed. 
 
-The second integration process reads the message from the very same AEM queue and runs the actual integration logic, in our case a message mapping, but only if the QueueID equals **12345**. The routing condition is added here to simulate an error situation: if the message mapping is not deployed, the messages in the corresponding Queue Partition stuck until the mapping is deployed and the first message is processed. If you choose another QueueID, that is other than **12345**, first of all the messages won't run the message mapping and hence won't run into an error in the first place. Secondly, the messages are most likely distributed to a different partition because of a different generated Partition Key Hash (based on the QueueID) and hence are not blocked.
+The second integration process reads the message from the very same AEM queue and runs the actual integration logic, in our case a message mapping, but only if the QueueID **not** equals **12345**. The routing condition is added here to simulate an error situation: if the message mapping is not deployed, the messages in the corresponding Queue Partition stuck until the mapping is deployed and the first message is processed. If you choose the QueueID **12345**, first of all the messages won't run the message mapping and hence won't run into an error in the first place. Secondly, the messages are most likely distributed to a different partition because of a different generated Partition Key Hash (based on the QueueID) and hence are not blocked.
 
 Once the message mapping has been successfully carried out, the message is reliably exchanged with a receiver using the XI 3.0 protocol. The **XI adapter** in Cloud Integration doesn’t natively support Exactly Once In Order delivery. Instead, you need to select the **Handled by Integration Flow** delivery assurance to implement the same. If you use the Handled by Integration Flow delivery assurance setting, the XI receiver adapter doesn’t persist the outgoing message which is not needed here because the message is persisted and retried from the exclusive JMS queue anyway. Furthermore, the XI receiver adapter expects the headers **SapQualityOfService** and **SapQueueId** to be set within the integration flow. Those headers are actually configured by using the corresponding headers passed from the SAP RM sender adapter.
 
@@ -204,7 +204,7 @@ Now you are all set to test your scenario!
 
 To test your configuration scenario, we use the Bruno API client application for which we have provided a collection with pre-configured sample requests. As a prerequisite to test your integration scenario using the Bruno API client, you should have gone through [Setup Bruno API client](../ex0#setup-bruno-api-client/). If not, do the setup, then come back and proceed with the steps below.
 
-1. Open the Bruno application on your laptop, expand the **EOIO Hands-on Workshop** collection and the **EOIO via Exclusive Queue** folder. Select the **Post Order in Sequence to AEM** POST request. Ensure that the right environment is selected which defines the host name of the tenant, the client id and the secret. Depending on which tenant you use in the exercises, select either **eu-02a** or **eu-02b**. In the provided URL, the **participant** variable should hold your user number <b>XX</b> assigned to you assuming that you have properly configured the parameter in the Bruno API client setup. The message GUID passed to the integration flow is automatically generated. Trigger a message by selecting the **Send Request** button on the upper right. The request should return HTTP code **202 Accepted**. In our first Test we leave the QueueID = "12345", so the Mapping does not get executed.
+1. Open the Bruno application on your laptop, expand the **EOIO Hands-on Workshop** collection and the **EOIO via Partitioned Queue** folder. Select the **Post Order in Sequence to AEM** POST request. Ensure that the right environment is selected which defines the host name of the tenant, the client id and the secret. Depending on which tenant you use in the exercises, select either **eu-02a** or **eu-02b**. In the provided URL, the **participant** variable should hold your user number <b>XX</b> assigned to you assuming that you have properly configured the parameter in the Bruno API client setup. The message GUID passed to the integration flow is automatically generated. Trigger a message by selecting the **Send Request** button on the upper right. The request should return HTTP code **202 Accepted**. In our first test we leave the QueueID equals **12345**, so the Mapping does not get executed.
 
 <img width="2559" height="974" alt="image" src="https://github.com/user-attachments/assets/179c053c-741c-4639-a55e-e8aea6c3c848" />
 
@@ -212,15 +212,15 @@ To test your configuration scenario, we use the Bruno API client application for
 
 <img width="1346" height="735" alt="image" src="https://github.com/user-attachments/assets/658da656-c994-4ff5-92c9-2a79eb6ed553" />
 
-Then Filter for your Iflow
+Then Filter for your Integration Flow.
 
 <img width="1962" height="308" alt="image" src="https://github.com/user-attachments/assets/da7ea13d-3dcd-44d1-ba9e-5c87a75b962c" />
 
-You can also filter based on QueueID
+You can also filter based on the QueueID ...
 
 <img width="2533" height="890" alt="image" src="https://github.com/user-attachments/assets/5b380d09-63df-4888-b104-5541f31c6d0a" />
 
-or purchaseOrder (Custom Header = OrderID)
+... or the purchaseOrder (Custom Header = OrderID).
 
 <img width="2500" height="937" alt="image" src="https://github.com/user-attachments/assets/a41fee96-744c-4f58-81e8-ff8ba50864a8" />
 
@@ -228,11 +228,11 @@ You should see 2 messages here: the first (bottom) is the message from the clien
 
 <img width="1970" height="666" alt="image" src="https://github.com/user-attachments/assets/0eae798f-687c-4fe9-884c-4b0be15e620e" />
 
-Our Mapping is only triggered when QueueID != 12345. So let´s send another 2 Messages from Bruno with QueueID = 123456 and 2 more with QueueID = 67891 
+Our Mapping is only triggered when QueueID **not** equals **12345**. So let´s send another 2 Messages from Bruno with QueueID equals **123456** and 2 more with QueueID equals **67891** 
 
 <img width="2138" height="514" alt="image" src="https://github.com/user-attachments/assets/1a18236f-fd16-480f-9d38-c3715fd7a4a7" />
 
-You should see now fore each QueueID two Message with Status "Completed". These are the Messages From the Client to AEM. Then there should be 1 Retry Message. This means AEM will try to push the message again in certain periods (defined in the Queue in AEM Broker Management).
+You should see now fore each QueueID two Message with Status **Completed**. These are the Messages From the Client to AEM. Then there should be 1 Retry Message. This means AEM will try to push the message again in certain periods (defined in the Queue in AEM Broker Management).
 
 <img width="2250" height="967" alt="image" src="https://github.com/user-attachments/assets/a35eb534-e0c7-4062-b467-efd228a15dea" />
 
@@ -241,11 +241,11 @@ Let´s check in AIM (https://mr-connection-h91kb3o1b6w.messaging.solace.cloud:94
 
 <img width="2028" height="648" alt="image" src="https://github.com/user-attachments/assets/0786d61d-4053-4400-8113-2b302aa09eae" />
 
-We can see that AEM has distributed the Messages to Partition 2 and 6. You can also see more if you  click one partition and on "Messages Queued". 
+We can see that AEM has distributed the Messages to Partition 2 and 6. You can also see more if you click one partition and on **Messages Queued**. 
 
 <img width="2545" height="565" alt="image" src="https://github.com/user-attachments/assets/d82d05e4-d2f4-4dd1-8001-f25d914c025a" />
 
-This means that these 2 Partitions are blocked until the error is resolved. If I send another Message with QueueID = "12345", it should go through, unless it is assigned to one of the blocked partitions. Let´s try it:
+This means that these 2 Partitions are blocked until the error is resolved. If you send another Message with QueueID equals **12345**, it should go through, unless it is assigned to one of the blocked partitions. Let´s try it:
 
 <img width="2138" height="501" alt="image" src="https://github.com/user-attachments/assets/92536e05-8e09-411c-9fb3-34825c266f04" />
 
@@ -256,14 +256,13 @@ Now let´s deploy the Message Mapping again:
 
 <img width="2307" height="492" alt="image" src="https://github.com/user-attachments/assets/4d73e5ea-f18c-4632-bd50-fac07bd94e3e" />
 
-Now after Refresh on AEM the Queues are clear:
+Now, after Refresh on AEM the Queues are clear ...
 
 <img width="1554" height="703" alt="image" src="https://github.com/user-attachments/assets/90e7d703-0165-402f-90e2-1b6a85db5aff" />
 
-and Messages with QueueID 123456 & 67891 are completed
+... and messages with QueueID **123456** and **67891** are completed.
 
 <img width="2257" height="870" alt="image" src="https://github.com/user-attachments/assets/38a150b2-e351-42fe-a1a3-3c612b427fa5" />
-
 
 
 ## Summary
