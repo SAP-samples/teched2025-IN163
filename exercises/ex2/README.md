@@ -176,7 +176,7 @@ In the following, you will configure and deploy the beforehand modified integrat
 | ----------------------| --------------------------------------------------------------| 
 | Host                  | tcps://mr-connection-h91kb3o1b6w.messaging.solace.cloud:55443 | 
 | Message VPN           | aem_communitycentral                                          |
-| AEM_Username          | solace-cloud-client                                           |
+| Username              | solace-cloud-client                                           |
 | Authentication Type   | Basic                                                         |
 | Password Secure Alias | RampUp_AEM_User                                               |
 | participant           | UserXX with XX your user id                                   |
