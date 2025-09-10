@@ -24,7 +24,7 @@ For running through the exercises, we provide the following **SAP Integration Su
 - Use the user **userXX** with **XX** your ID and password provided by the instructors.
 
 For running through Exercise 2, you need to access an **Advanced Event Mesh broker** in addition to the SAP Integration Suite tenant. We will use the following broker:
-- [**AEM broker**](https://tbd).
+- [**AEM broker**]([https://tbd](https://mr-connection-h91kb3o1b6w.messaging.solace.cloud:943/?_gl=1*v2iwkf*_gcl_au*MTQ1MTI1NTAyNC4xNzU2OTAxMDU0LjU1OTA2MDg5Ni4xNzU3MzMyOTk3LjE3NTczMzMwMTc.*_ga*MTc3MjY3NjI1OS4xNzExNjMzNDUy*_ga_XZ3NWMM83E*czE3NTczNDEzMzMkbzI2NiRnMSR0MTc1NzM0MTM0OSRqNDQkbDAkaDA.#/msg-vpns/YWVtX2NvbW11bml0eWNlbnRyYWw=/properties/summary?token=YWJj.eyJhY2Nlc3NfdG9rZW4iOiAibWlzc2lvbi1jb250cm9sLW1hbmFnZXI6NjJlYWZzZTNmdTdrOHEyZjFkdmdvMXM1cjEifQ%3D%3D.eHl6&title=AEM_CommunityCentral&subtitle=aem_communitycentral)).
 - Use the user xxx and password provided by the instructor.
 
 ## Exercises
