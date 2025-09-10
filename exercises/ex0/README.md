@@ -8,7 +8,7 @@ Before running through the exercises, you first need to run trough the following
 
 As a prerequisite, you first need to create an integration package where your integration flows are created. If you have already run through other exercises before, you may have already created an own package with same name. In this case, you can simply reuse the other package and skip the steps below.
 
-1. Open the SAP Integration Suite landing page, and navigate to <b>Design > Integrations and APIs</b>, and select  <b>Create</b>.
+1. Open the **SAP Integration Suite** landing page (see [System Access](/#system-access)), and navigate to <b>Design > Integrations and APIs</b>, and select  <b>Create</b>.
 
 <br>![](/exercises/ex0/images/00_01_Package_01.png)
    
