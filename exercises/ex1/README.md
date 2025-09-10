@@ -18,7 +18,7 @@ In order to simulate the error situation, we will use a re-usable message mappin
 
 In the following, you will copy the provided integration flow and message mapping templates to your package. As a prerequisite, you should have created an own package. If you haven't created an own integration package yet, navigate to [Create an Integration package](/exercises/ex0/#create-an-integration-package), create a new package and then return. Otherwise, proceed with the next steps.
 
-1. Open the provided SAP Integration Suite tenant (see [System Access](/main/#system-access)), and navigate to **Design > Integrations and APIs**. From there, open the integration package **EOIO Hands-on Workshop - Template** by selecting the same.
+1. Open the provided SAP Integration Suite tenant (see [System Access](/#system-access)), and navigate to **Design > Integrations and APIs**. From there, open the integration package **EOIO Hands-on Workshop - Template** by selecting the same.
 
 <br>![image](/exercises/ex1/images/01_01_CopyTemplates_01.png)
 
