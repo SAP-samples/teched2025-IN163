@@ -155,30 +155,25 @@ Scroll down to the **User Properties** section, add the **JMSXGroupID** and **pu
 
 ## Exercise 2.4 - Configure Queue on AEM Broker
 
-1. Open the Broker Manager of the AEM broker (see [System Access](/#system-access)).
-  
-   https://mr-connection-h91kb3o1b6w.messaging.solace.cloud:943/?_gl=1*v2iwkf*_gcl_au*MTQ1MTI1NTAyNC4xNzU2OTAxMDU0LjU1OTA2MDg5Ni4xNzU3MzMyOTk3LjE3NTczMzMwMTc.*_ga*MTc3MjY3NjI1OS4xNzExNjMzNDUy*_ga_XZ3NWMM83E*czE3NTczNDEzMzMkbzI2NiRnMSR0MTc1NzM0MTM0OSRqNDQkbDAkaDA.#/msg-vpns/YWVtX2NvbW11bml0eWNlbnRyYWw=?token=YWJj.eyJhY2Nlc3NfdG9rZW4iOiAibWlzc2lvbi1jb250cm9sLW1hbmFnZXI6NjJlYWZzZTNmdTdrOHEyZjFkdmdvMXM1cjEifQ%3D%3D.eHl6&title=AEM_CommunityCentral&subtitle=aem_communitycentral
+1. Open the AEM broker (see [System Access](/#system-access)), and select the Message VPN.
 
-2. Create a Queue with Name **HOW_EOIO_PQ_UserXX** with **XX** the user ID assigned to you.
+<br>![image](/exercises/ex2/images/02_04_aem_00.png)
 
-3. Change the Access Type to **Non-Exclusive** and the **Partition Count** as well as the **Maximum Consumer Count** to **10**.
-<img width="1168" height="611" alt="image" src="https://github.com/user-attachments/assets/98761960-8401-4821-baff-e3eb5d2d8514" />
+2. In the Broker Manager of the VPN, select the **Queues** entry from the navigation pane, and select the **+ Queue** button to create a new queue.
 
-4. Open up the **Advanced Settings**.
+<br>![image](/exercises/ex2/images/02_04_aem_01.png)
 
-<img width="1553" height="629" alt="image" src="https://github.com/user-attachments/assets/fd1dc9d7-f9ad-4bb4-9528-884dabed7431" />
+3. In the upcoming dialog, enter the Queue Name **HOW_EOIO_PQ_UserXX** with **XX** the user ID assigned to you. Click **Create**.
+
+<br>![image](/exercises/ex2/images/02_04_aem_02.png)
+
+4. In the **Edit Queue Settings**, change the Access Type to **Non-Exclusive** and the **Partition Count** as well as the **Maximum Consumer Count** to **10**. Then select the **Show Advanced Settings** link.
+
+<br>![image](/exercises/ex2/images/02_04_aem_03.png)
    
-5. Change the parameter **Maximum Delivered Unacknowledged Messages per Flow** to **1** (needed for ensuring EOIO).
+5. Scroll down, and change the parameter **Maximum Delivered Unacknowledged Messages per Flow** to **1** (needed for ensuring EOIO). Then, **Apply** your configuration.
 
-<img width="1532" height="505" alt="image" src="https://github.com/user-attachments/assets/e28f3ba5-7a7d-480c-ac5b-b3a00d791819" />
-
-6. **Apply** your configuration.
-
-7. FYI: The required connection details for the Cloud Integration Flow can be derived from the AEM Cluster Manager (in the AEM Dashboard outside of the Broker Manager).
-
-   <img width="2555" height="905" alt="image" src="https://github.com/user-attachments/assets/46d50e3f-e6e0-42e4-888f-7cc42d4459fb" />
-
-Note: The connection details are provided in the table below.
+<br>![image](/exercises/ex2/images/02_04_aem_04.png)
 
 ## Exercise 2.5 - Configure and Deploy your Integration Flow
 
@@ -248,13 +243,13 @@ To test your configuration scenario, we use the Bruno API client application for
 
 <br>![image](/exercises/ex2/images/02_06_08.png)
 
-8. Let´s check in AIM (https://mr-connection-h91kb3o1b6w.messaging.solace.cloud:943/?_gl=1*qknv9f*_gcl_au*MTQ1MTI1NTAyNC4xNzU2OTAxMDU0LjU1OTA2MDg5Ni4xNzU3MzMyOTk3LjE3NTczMzMwMTc.*_ga*MTc3MjY3NjI1OS4xNzExNjMzNDUy*_ga_XZ3NWMM83E*czE3NTczNDEzMzMkbzI2NiRnMSR0MTc1NzM0MjcwMCRqMzkkbDAkaDA.#/msg-vpns/YWVtX2NvbW11bml0eWNlbnRyYWw=?token=YWJj.eyJhY2Nlc3NfdG9rZW4iOiAibWlzc2lvbi1jb250cm9sLW1hbmFnZXI6NjJlYWZzZTNmdTdrOHEyZjFkdmdvMXM1cjEifQ%3D%3D.eHl6&title=AEM_CommunityCentral&subtitle=aem_communitycentral) 
+8. Let´s navigate back to the AEM broker. In the **Queues** monitor, filter for your user ID **UserXX**, and select your queue. 
 
-<img width="2028" height="648" alt="image" src="https://github.com/user-attachments/assets/0786d61d-4053-4400-8113-2b302aa09eae" />
+<br>![image](/exercises/ex2/images/02_06_aem_01.png)
 
-9. We can see that AEM has distributed the Messages to Partition 2 and 6. You can also see more if you click one partition and on **Messages Queued**. This means that these 2 Partitions are blocked until the error is resolved.
+9. Switch to tab **Partitions**. We can see that AEM has distributed the Messages to Partition 2 and 6. Partition 2 has 2 messages, partition 6 one. Depending on which **QueueID** value you have chosen, the partition numbers for your tests may differ. You can also see more details if you click one partition and there on **Messages Queued**. So, those two partitions are blocked until the error has been resolved.
 
-<img width="2545" height="565" alt="image" src="https://github.com/user-attachments/assets/d82d05e4-d2f4-4dd1-8001-f25d914c025a" />
+<br>![image](/exercises/ex2/images/02_06_aem_02.png)
 
 10. If you send another Message with QueueID equals **12345**, it should go through, unless it is assigned to one of the blocked partitions. Let´s try it.
 
@@ -270,7 +265,7 @@ To test your configuration scenario, we use the Bruno API client application for
 
 13. Now, after Refresh on AEM the Queues are clear ...
 
-<img width="1554" height="703" alt="image" src="https://github.com/user-attachments/assets/90e7d703-0165-402f-90e2-1b6a85db5aff" />
+<br>![image](/exercises/ex2/images/02_06_aem_03.png)
 
 14. ... and messages with QueueID **123456** and **67891** are completed.
 
