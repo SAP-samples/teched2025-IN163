@@ -15,13 +15,17 @@ For an introduction into Exactly Once In Order support in Cloud Integration, che
 
 For more details about the actual implementaiton options of Exactly Once In Order in Cloud Integration, refer to the [design guidelines](https://help.sap.com/docs/integration-suite/sap-integration-suite/quality-of-service-exactly-once-in-order).
 
-## Access to SAP Integration Suite tenant
+## System Access
 
-For running through the exercises, we provide the following SAP Integration Suite tenants. The instructors will let you know which of the tenants are actually used for the exercises.
+For running through the exercises, we provide the following **SAP Integration Suite tenants**. The instructors will let you know which of the tenants are actually used for the exercises.
 
 - Option 1: [**Workshop tenant eu-02a**](https://workshop-eu-02a.integrationsuite-cpi033.cfapps.eu10-005.hana.ondemand.com/shell/home).
 - Option 2: [**Workshop tenant eu-02b**](https://workshop-eu-02b.integrationsuite-cpi035.cfapps.eu20-001.hana.ondemand.com/shell/home).
 - Use the user **userXX** with **XX** your ID and password provided by the instructors.
+
+For running through Exercise 2, you need to access an **Advanced Event Mesh broker** in addition to the SAP Integration Suite tenant. We will use the following broker:
+- [**AEM broker**](https://tbd).
+- Use the user xxx and password provided by the instructor.
 
 ## Exercises
 
