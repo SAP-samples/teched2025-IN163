@@ -188,7 +188,7 @@ In the following, you will configure and deploy the beforehand modified integrat
 | Host                  | **tcps://mr-connection-h91kb3o1b6w.messaging.solace.cloud:55443** | 
 | Message VPN           | **aem_communitycentral**                                          |
 | Username              | **solace-cloud-client**                                           |
-| Password Secure Alias | **RampUp_AEM_User**                                               |
+| Password Secure Alias | **AEM**                                               |
 | participant           | **UserXX** with **XX** your user id                                   |
 
 **Note**: Because we use externalized parameters, the connection details for the AEM_Receiver adapter is automatically set.
