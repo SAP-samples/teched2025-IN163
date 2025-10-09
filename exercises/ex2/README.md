@@ -185,8 +185,8 @@ In the following, you will configure and deploy the beforehand modified integrat
 
 |Name                   | Value                                                         |
 | ----------------------| --------------------------------------------------------------| 
-| Host                  | **tcps://mr-connection-h91kb3o1b6w.messaging.solace.cloud:55443** | 
-| Message VPN           | **aem_communitycentral**                                          |
+| Host                  | **tcps://mr-connection-6jekt6djxiu.messaging.solace.cloud:55443** | 
+| Message VPN           | **teched-2025-in163**                                          |
 | Username              | **solace-cloud-client**                                           |
 | Password Secure Alias | **AEM**                                               |
 | participant           | **UserXX** with **XX** your user id                                   |
