@@ -153,25 +153,33 @@ Scroll down to the **User Properties** section, add the **JMSXGroupID** and **pu
 
 ## Exercise 2.4 - Configure Queue on AEM Broker
 
-1. Open the AEM broker (see [System Access](/#system-access)), and select the Message VPN.
+1. Open the AEM broker (see [System Access](/#system-access)), navigate to the **Cluster Manager**, and select the broker **teched-2025-in163**.
 
-<br>![image](/exercises/ex2/images/02_04_aem_00.png)
+<br>![image](/exercises/ex2/images/02_04_aem_new_02.png)
 
-2. In the Broker Manager of the VPN, select the **Queues** entry from the navigation pane, and select the **+ Queue** button to create a new queue.
+2. In the **Service Details** page of the broker, select the **Open Broker Manager** link from the upper right.
 
-<br>![image](/exercises/ex2/images/02_04_aem_01.png)
+<br>![image](/exercises/ex2/images/02_04_aem_new_03.png)
 
-3. In the upcoming dialog, enter the Queue Name **HOW_EOIO_PQ_UserXX** with **XX** the user ID assigned to you. Click **Create**.
+3. In the Broker Manager, select the **Queues** entry from the navigation pane, and select the **+ Queue** button to create a new queue.
 
-<br>![image](/exercises/ex2/images/02_04_aem_02.png)
+<br>![image](/exercises/ex2/images/02_04_aem_new_04.png)
 
-4. In the **Edit Queue Settings**, change the Access Type to **Non-Exclusive** and the **Partition Count** as well as the **Maximum Consumer Count** to **10**. Then select the **Show Advanced Settings** link.
+4. In the upcoming dialog, enter the Queue Name **HOW_EOIO_PQ_UserXX** with **XX** the user ID assigned to you. Click **Create**.
 
-<br>![image](/exercises/ex2/images/02_04_aem_03.png)
+<br>![image](/exercises/ex2/images/02_04_aem_new_05.png)
+
+5. In the **Edit Queue Settings**, change the Access Type to **Non-Exclusive** and the **Partition Count** as well as the **Maximum Consumer Count** to **10**. Then select the **Show Advanced Settings** link.
+
+<br>![image](/exercises/ex2/images/02_04_aem_new_06.png)
    
-5. Scroll down, and change the parameter **Maximum Delivered Unacknowledged Messages per Flow** to **1** (needed for ensuring EOIO). Then, **Apply** your configuration.
+6. Scroll down, and change the parameter **Maximum Delivered Unacknowledged Messages per Flow** to **1** (needed for ensuring EOIO). Then, **Apply** your configuration.
 
-<br>![image](/exercises/ex2/images/02_04_aem_04.png)
+<br>![image](/exercises/ex2/images/02_04_aem_new_07.png)
+
+7. A new queue should show up in the **Queues** tab.
+
+<br>![image](/exercises/ex2/images/02_04_aem_new_08.png)
 
 ## Exercise 2.5 - Configure and Deploy your Integration Flow
 
