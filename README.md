@@ -21,11 +21,11 @@ For running through the exercises, we provide the following **SAP Integration Su
 
 - Option 1: [**Workshop tenant eu-02a**](https://workshop-eu-02a.integrationsuite-cpi033.cfapps.eu10-005.hana.ondemand.com/shell/home).
 - Option 2: [**Workshop tenant eu-02b**](https://workshop-eu-02b.integrationsuite-cpi035.cfapps.eu20-001.hana.ondemand.com/shell/home).
-- Use the user **userXX** with **XX** your ID and password provided by the instructors.
+- Use the user **userXX** with **XX** from 01 to 45. The ID **XX** assigned to you and the password will be provided by the instructors.
 
 For running through Exercise 2, you need to access an **Advanced Event Mesh broker** in addition to the SAP Integration Suite tenant. We will use the following broker:
-- [**AEM broker**](https://mr-connection-h91kb3o1b6w.messaging.solace.cloud:943/#/system-info/msg-vpns/msg-vpn-list).
-- Use the user xxx and password provided by the instructor.
+- [**AEM broker**](https://eu10.console.pubsub.em.services.cloud.sap/login?tenant-id=8b4a1697-2b58-4571-a986-1377cc070073).
+- Use the user **IN163-XXX@education.cloud.sap** with **XXX** from 001 to 045. The ID **XXX** assigned to you and the password will be provided by the instructor.
 
 ## Exercises
 
