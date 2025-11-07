@@ -253,7 +253,7 @@ To test your configuration scenario, we use the Bruno API client application for
 
 <br>![image](/exercises/ex2/images/02_06_aem_01.png)
 
-9. Switch to tab **Partitions**. We can see that AEM has distributed the Messages to Partition 2 and 6. Partition 2 has 2 messages, partition 6 one. Depending on which **QueueID** value you have chosen, the partition numbers for your tests may differ. You can also see more details if you click one partition and there on **Messages Queued**. So, those two partitions are blocked until the error has been resolved.
+9. Switch to tab **Partitions**. We can see that AEM has distributed the Messages to Partition number 1 and number 2. Partition number 1 has one message, partition number 2 has two. Depending on which **QueueID** value you have chosen, the partition numbers for your tests may differ. You can also see more details if you click one partition and there on **Messages Queued**. So, those two partitions are blocked until the error has been resolved.
 
 <br>![image](/exercises/ex2/images/02_06_aem_02.png)
 
