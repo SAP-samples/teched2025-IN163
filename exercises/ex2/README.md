@@ -124,7 +124,7 @@ Scroll down to the **User Properties** section, add the **JMSXGroupID** and **pu
 | Name              | Value                       |
 | ----------------- | --------------------------- |
 | Run on a single worker node     | Select the check box    |
-| Parallel consumers     | **10**                       |
+| Parallel consumers     | **5**                       |
 | Queue Name  | **HOW_EOIO_PQ_{{participant}}** |
 | Acknowledgement Mode  | **Automatic On Exchange Complete** |
 | Settlement Outcome After maximum Attempts  | Keep the default which is **Failed** |
@@ -169,7 +169,7 @@ Scroll down to the **User Properties** section, add the **JMSXGroupID** and **pu
 
 <br>![image](/exercises/ex2/images/02_04_aem_new_05.png)
 
-5. In the **Edit Queue Settings**, change the Access Type to **Non-Exclusive** and the **Partition Count** as well as the **Maximum Consumer Count** to **10**. Then select the **Show Advanced Settings** link.
+5. In the **Edit Queue Settings**, change the Access Type to **Non-Exclusive** and the **Partition Count** as well as the **Maximum Consumer Count** to **5**. Then select the **Show Advanced Settings** link.
 
 <br>![image](/exercises/ex2/images/02_04_aem_new_06.png)
    
