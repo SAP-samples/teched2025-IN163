@@ -53,23 +53,11 @@ Now that you have copied the provided template, we should be all set to enhance 
 
 <br>![image](/exercises/ex2/images/02_03_02.png)
 
-3. First, we will maintain the AEM connection to decouple the two integration processes. In the editor, select the message end event **End** of the upper integration process **Integration Process: Provider flow**, then drag ...
-
-<br>![image](/exercises/ex2/images/02_03_03.png)
-  
-4. ... and drop a connection to the Receiver.
-
-<br>![image](/exercises/ex2/images/02_03_04.png)
-
-5. In the upcoming dialog, select the Adapter Type **AdvancedEventMesh**. 
-
-<br>![image](/exercises/ex2/images/02_03_05.png)
-
-6. Select the AEM connection. In the **Properties** section of the AEM receiver adapter, click on **Externalize**.
+3. First, we will maintain the AEM connection which decouples the two integration processes. The connection of Adapter Type **AdvancedEventMesh** has been already created. Select the AEM connection of the receiver adapter. In the **Properties** section of the AEM receiver adapter, click on **Externalize**.
 
 <br>![image](/exercises/ex2/images/02_03_06.png)
 
-7. On the **Externalization** dialog, stay on tab **Connection**, and maintain the Externalized Parameters as follows. When done, select **OK** to close the **Externalization** dialog.
+4. On the **Externalization** dialog, stay on tab **Connection**, and maintain the Externalized Parameters as follows. When done, select **OK** to close the **Externalization** dialog.
 
 |Name                   | Value                     |
 | ----------------------| ---------------------------| 
@@ -80,7 +68,7 @@ Now that you have copied the provided template, we should be all set to enhance 
 
 <br>![image](/exercises/ex2/images/02_03_07.png)
    
-8. Switch to the **Processing** tab. Maintain the Parameters as follows:
+5. Switch to the **Processing** tab. Maintain the Parameters as follows:
 
 | Name              | Value                       |
 | ----------------- | --------------------------- |
@@ -92,7 +80,7 @@ Note that here we externalize parts of the parameters so we can only assign one 
 
 <br>![image](/exercises/ex2/images/02_03_08.png)
 
-9. Switch to the **Message Properties** tab and add the following Properties. The properties are stored on the AEM queue so that they can be used in the consumer integration flow.
+6. Switch to the **Message Properties** tab and add the following Properties. The properties are stored on the AEM queue so that they can be used in the consumer integration flow.
 
 |Name                   | Value                       |
 | ----------------------| ----------------------------|
@@ -108,7 +96,7 @@ Scroll down to the **User Properties** section, add the **JMSXGroupID** and **pu
    
 <br>![image](/exercises/ex2/images/02_03_09.png)
 
-10. In the integration flow model, scroll down to the **Integration Process: Consumer flow**, and add an AEM sender connection between the Sender and the message start event in a similar way how you did this for the AEM receiver adapter by dropping and dragging a connection between the sender and the message start event. Now, let's maintain the very same Externalized Parameters for the sender connection as well. There is another option how to do this actually without entering the Externalization dialog. You can stay in the **Properties** section of the AEM sender adapter and switch to the **Connection** tab. Here, maintain the values as follows. For the **Username**, ensure to overwrite the **default** value.
+7. In the integration flow model, scroll down to the **Integration Process: Consumer flow**, and add an AEM sender connection between the Sender and the message start event in a similar way how you did this for the AEM receiver adapter by dropping and dragging a connection between the sender and the message start event. Now, let's maintain the very same Externalized Parameters for the sender connection as well. There is another option how to do this actually without entering the Externalization dialog. You can stay in the **Properties** section of the AEM sender adapter and switch to the **Connection** tab. Here, maintain the values as follows. For the **Username**, ensure to overwrite the **default** value.
 
 |Name                   | Value                                                         |
 | ----------------------| --------------------------------------------------------------| 
@@ -119,7 +107,7 @@ Scroll down to the **User Properties** section, add the **JMSXGroupID** and **pu
 
 <br>![image](/exercises/ex2/images/02_03_10.png)
   
-11. Switch to the **Processing** tab, and maintain the following parameters:
+8. Switch to the **Processing** tab, and maintain the following parameters:
 
 | Name              | Value                       |
 | ----------------- | --------------------------- |
@@ -131,23 +119,23 @@ Scroll down to the **User Properties** section, add the **JMSXGroupID** and **pu
 
 <br>![image](/exercises/ex2/images/02_03_11.png)
 
-12. Next, we need to add the message mapping. Click outside of the integration processes to be able to configure the integration flow components. From the integration flow configuration, switch to tab **References**. Within the references, switch to tab **Global**, and select **Message Mapping** from the **Add References** menu.
+9. Next, we need to add the message mapping. Click outside of the integration processes to be able to configure the integration flow components. From the integration flow configuration, switch to tab **References**. Within the references, switch to tab **Global**, and select **Message Mapping** from the **Add References** menu.
 
 <br>![image](/exercises/ex2/images/02_03_12.png)
 
-13. In the upcoming **References** dialog, select the beforehand added message mapping **MM EOIO - XX** and select **OK**.
+10. In the upcoming **References** dialog, select the beforehand added message mapping **MM EOIO - XX** and select **OK**.
 
 <br>![image](/exercises/ex2/images/02_03_13.png)
 
-14. The message mapping should be assigned behind the Router condition in the Step **Message Mapping** in the **Integration Process: Consumer flow**. Select the flow step **Message Mapping**, select the **Processing** tab and click **Select**.
+11. The message mapping should be assigned behind the Router condition in the Step **Message Mapping** in the **Integration Process: Consumer flow**. Select the flow step **Message Mapping**, select the **Processing** tab and click **Select**.
 
 <br>![image](/exercises/ex2/images/02_03_14.png)
 
-15. Choose the **Global Ressources** tab and select the beforehand added Message Mapping **MM_EOIO_XX** with **XX** the user ID assigned to you. Select **OK**.
+12. Choose the **Global Ressources** tab and select the beforehand added Message Mapping **MM_EOIO_XX** with **XX** the user ID assigned to you. Select **OK**.
 
 <br>![image](/exercises/ex2/images/02_03_15.png)
 
-16. **Save** your Integration Flow.
+13. **Save** your Integration Flow.
 
 <br>![image](/exercises/ex2/images/02_03_16.png)
 
