@@ -96,7 +96,7 @@ Scroll down to the **User Properties** section, add the **JMSXGroupID** and **pu
    
 <br>![image](/exercises/ex2/images/02_03_09.png)
 
-7. In the integration flow model, scroll down to the **Integration Process: Consumer flow**, and add an AEM sender connection between the Sender and the message start event in a similar way how you did this for the AEM receiver adapter by dropping and dragging a connection between the sender and the message start event. Now, let's maintain the very same Externalized Parameters for the sender connection as well. There is another option how to do this actually without entering the Externalization dialog. You can stay in the **Properties** section of the AEM sender adapter and switch to the **Connection** tab. Here, maintain the values as follows. For the **Username**, ensure to overwrite the **default** value.
+7. In the integration flow model, scroll down to the **Integration Process: Consumer flow**, and configure the AEM sender connection between the Sender and the message start event. Let's maintain the very same Externalized Parameters for the sender connection as well. There is another option how to do this actually without entering the Externalization dialog. You can stay in the **Properties** section of the AEM sender adapter and switch to the **Connection** tab. Here, maintain the values as follows. For the **Username**, ensure to overwrite the **default** value.
 
 |Name                   | Value                                                         |
 | ----------------------| --------------------------------------------------------------| 
