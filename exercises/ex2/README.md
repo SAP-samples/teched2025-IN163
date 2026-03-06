@@ -105,6 +105,8 @@ Scroll down to the **User Properties** section, add the **JMSXGroupID** and **pu
 | Username              | **{{AEM_Username}}**                                         |
 | PasswordSecureAlias | **{{AEM_PasswordSecureAlias}}**                                               |
 
+**Note**: If you get an error when entering the externalized parameter for the PasswordSecureAlias, enter the constant **AEM** instead.
+
 <br>![image](/exercises/ex2/images/02_03_10.png)
   
 8. Switch to the **Processing** tab, and maintain the following parameters:
